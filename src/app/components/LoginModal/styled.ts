@@ -23,6 +23,7 @@ export const InputBox = styled.input`
     padding: 0px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
+    color: black;
 `
 
 export const SubmitButton = styled.button`
