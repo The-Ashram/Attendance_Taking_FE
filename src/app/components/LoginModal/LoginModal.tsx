@@ -1,4 +1,4 @@
-import {ForgetButton, InputBox, InputWrapper, SubmitButton, Wrapper} from "@/app/components/LoginModal/styled";
+import {CTAButton, InputBox, InputWrapper, Wrapper} from "@/app/components/LoginModal/styled";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 
@@ -18,15 +18,16 @@ export default function LoginModal() {
                 <InputBox required={true} placeholder={"Email"}/>
                 <InputBox required={true} placeholder={"Password"}/>
             </InputWrapper><InputWrapper>
-                <SubmitButton onClick={onLogin}>Submit</SubmitButton>
-                <ForgetButton onClick={forgetHandler}>Forget Password</ForgetButton>
+                <CTAButton onClick={onLogin}>Submit</CTAButton>
+                <CTAButton onClick={forgetHandler}>Forget Password</CTAButton>
             </InputWrapper></>}
             {isForget && <><label style={{color: "black", textAlign: "center"}}>Forget Password</label>
-            <InputWrapper>
-                <InputBox required={true} placeholder={"Email"}/>
-            </InputWrapper>
                 <InputWrapper>
-                <SubmitButton onClick={forgetHandler}>Submit</SubmitButton>
+                    <InputBox required={true} placeholder={"Email"}/>
+                </InputWrapper>
+                <InputWrapper>
+                    <CTAButton onClick={forgetHandler}>Submit</CTAButton>
+                    <CTAButton onClick={forgetHandler}>Cancel</CTAButton>
                 </InputWrapper>
             </>}
         </Wrapper>
