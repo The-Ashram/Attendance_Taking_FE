@@ -22,18 +22,13 @@ export const InputBox = styled.input`
     background-color: #ffffff;
     padding: 0px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
+    margin: 10px;
     color: black;
 `
 
-export const SubmitButton = styled.button`
+export const CTAButton = styled.button`
     width: 200px;
     height: 30px;
-    margin-bottom: 20px;
-`
-
-export const ForgetButton = styled.button`
-    width: 200px;
-    height: 30px;
+    margin: 10px;
 `
 
