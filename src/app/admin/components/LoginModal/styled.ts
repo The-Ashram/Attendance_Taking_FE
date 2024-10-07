@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {IoEyeOutline, IoEyeOffOutline} from "react-icons/io5";
 
 export const Wrapper = styled.div`
     background-color: white;
@@ -17,10 +18,9 @@ export const InputWrapper = styled.div`
 
 export const InputBox = styled.input`
     width: 200px;
-    height:30px;
+    height: 30px;
     border-radius: 5px;
     background-color: #ffffff;
-    padding: 0px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 10px;
     color: black;
@@ -32,3 +32,7 @@ export const CTAButton = styled.button`
     margin: 10px;
 `
 
+export const ErrorMessage = styled.p`
+    text-align: center;
+    font-size: 14px;
+`
