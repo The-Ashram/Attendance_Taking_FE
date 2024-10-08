@@ -9,7 +9,7 @@ export default function Header() {
     }
 
     const AccountHandler = () => {
-        router.push("/account")
+        router.push("/admin/account")
     }
     return (
         <Wrapper>
