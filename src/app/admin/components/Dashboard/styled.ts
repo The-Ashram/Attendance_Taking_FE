@@ -17,8 +17,8 @@ export const StatsBlock = styled.button`
     height: 150px;
     padding: 15px;
     display: grid;
-    background-color: lightslategray;
-    border: lightslategray;
+    background-color: indianred;
+    border: indianred;
     border-radius: 15px;
 
     &:hover {
@@ -26,7 +26,7 @@ export const StatsBlock = styled.button`
     }
 `
 export const ModalWrapper = styled.div`
-    width: 20%;
-    height: 20%;
     background: white;
+    display: flex;
+    justify-content: center;
 `
