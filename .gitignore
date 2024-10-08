@@ -16,6 +16,5 @@ yarn-error.log
 .env.test.local
 .env.production.local
 
-# Ignore lockfiles (optional, based on your team preference)
-package-lock.json
-yarn.lock
+.idea
+
