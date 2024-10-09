@@ -17,8 +17,8 @@ export const StatsBlock = styled.button`
     height: 150px;
     padding: 15px;
     display: grid;
-    background-color: indianred;
-    border: indianred;
+    background-color: lightseagreen;
+    border: lightseagreen;
     border-radius: 15px;
 
     &:hover {

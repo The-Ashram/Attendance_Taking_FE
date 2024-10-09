@@ -10,13 +10,14 @@ export const FormWrapper = styled.div`
 export const FormButtons = styled.div`
     width: 50vw;
     height: 12vh;
-    background: lightslategray;
-    border: aliceblue;
+    background: lightseagreen;
+    border: lightseagreen;
     color: #1a1a1a;
     border-radius: 10px;
     align-content: center;
     text-align: center;
     margin: 10vh 0;
+    font-size: 32px;
 
     &:hover {
         background: lightcoral;

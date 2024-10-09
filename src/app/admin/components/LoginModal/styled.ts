@@ -22,14 +22,14 @@ export const InputBox = styled.input`
     border-radius: 5px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 10px;
+    margin: 20px;
     color: black;
 `
 
 export const CTAButton = styled.button`
     width: 200px;
     height: 30px;
-    margin: 10px;
+    margin: 20px;
 `
 
 export const ErrorMessage = styled.p`

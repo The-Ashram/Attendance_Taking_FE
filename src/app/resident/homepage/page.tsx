@@ -8,7 +8,7 @@ export default function Homepage() {
         <Header/>
         <FormWrapper>
             <FormButtons>Sign In</FormButtons>
-            <FormButtons>Events</FormButtons>
+            {/*<FormButtons>Events</FormButtons>*/}
         </FormWrapper>
     </>
 }
