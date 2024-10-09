@@ -29,13 +29,7 @@ export default function Header() {
             :
             <Button onClick={homeHandler}>Home</Button>
         }
-
-        {isRequestForm ?
-            <Title >Reqeust form</Title>
-            :
-            <Button onClick={homeHandler}>Home</Button>
-
-        }
+        
         <Button onClick={requestHandler}>Submit Request Form</Button>
         <Button onClick={accountsHandler}>Account</Button>
         <Button onClick={logoutHandler}>Log Out</Button>
