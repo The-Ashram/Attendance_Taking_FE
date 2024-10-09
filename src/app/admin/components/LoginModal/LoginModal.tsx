@@ -14,12 +14,17 @@ export default function LoginModal() {
     const router = useRouter();
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [isForget, setForget] = useState(false)
+
     const forgetHandler = () => {
         setForget((s) => !s)
     }
 
     const onLogin = (data: any) => {
-        console.log(data)
+        if(data.email == 'admin@ashram.com') {
+            router.push("/admin/homepage")
+        } else if (data.email == 'resident@ashram.com') {
+            router.push("/resident/homepage")
+        }
         // router.push("/homepage");
     }
     return (
@@ -42,19 +47,19 @@ export default function LoginModal() {
                         <ErrorMessage>{errors.password?.message as string}</ErrorMessage>
                     </InputWrapper><InputWrapper>
                     <CTAButton onClick={handleSubmit(onLogin)}>Submit</CTAButton>
-                    <CTAButton onClick={forgetHandler}>Forget Password</CTAButton>
+                    {/*<CTAButton onClick={forgetHandler}>Forget Password</CTAButton>*/}
                 </InputWrapper>
                 </form>
             </>}
-            {isForget && <><label style={{color: "black", textAlign: "center"}}>Forget Password</label>
-                <InputWrapper>
-                    <InputBox required={true} placeholder={"Email"}/>
-                </InputWrapper>
-                <InputWrapper>
-                    <CTAButton onClick={handleSubmit(onLogin)}>Submit</CTAButton>
-                    <CTAButton onClick={forgetHandler}>Cancel</CTAButton>
-                </InputWrapper>
-            </>}
+            {/*{isForget && <><label style={{color: "black", textAlign: "center"}}>Forget Password</label>*/}
+            {/*    <InputWrapper>*/}
+            {/*        <InputBox required={true} placeholder={"Email"}/>*/}
+            {/*    </InputWrapper>*/}
+            {/*    <InputWrapper>*/}
+            {/*        <CTAButton onClick={handleSubmit(onLogin)}>Submit</CTAButton>*/}
+            {/*        <CTAButton onClick={forgetHandler}>Cancel</CTAButton>*/}
+            {/*    </InputWrapper>*/}
+            {/*</>}*/}
         </Wrapper>
     )
 }
