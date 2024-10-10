@@ -1,14 +1,23 @@
-'use client'
+"use client";
 
 import Header from "@/app/resident/components/Header/header";
-import {FormButtons, FormWrapper} from "@/app/resident/homepage/styled";
+import { FormButtons, FormWrapper } from "@/app/resident/homepage/styled";
+import { useRouter } from "next/navigation";
 
 export default function Homepage() {
-    return <>
-        <Header/>
-        <FormWrapper>
-            <FormButtons>Sign In</FormButtons>
-            {/*<FormButtons>Events</FormButtons>*/}
-        </FormWrapper>
+  const router = useRouter();
+
+  function requestHandler() {
+    router.push("/resident/requestform");
+  }
+
+  return (
+    <>
+      <Header />
+      <FormWrapper>
+        <FormButtons onClick={requestHandler}>Sign In</FormButtons>
+        {/*<FormButtons>Events</FormButtons>*/}
+      </FormWrapper>
     </>
+  );
 }
