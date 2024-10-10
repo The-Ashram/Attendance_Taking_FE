@@ -27,17 +27,17 @@ export default function Dashboard() {
 
     return (
         <Container>
-            <Modal isOpen={openModal} onRequestClose={() => modalHandler(false)} style={customStyles}>
+            <Modal isOpen={openModal} onRequestClose={() => modalHandler(false)} style={customStyles} ariaHideApp={false}>
                 <ModalContents inModal={inModal}/>
             </Modal>
             <Wrapper>
                 <StatsBlock onClick={() => modalHandler(false)}>
                     <label style={{fontSize: "25px"}}>Residents Out</label>
-                    <label style={{fontSize: "40px"}}>15</label>
+                    <label style={{fontSize: "40px"}}>3</label>
                 </StatsBlock>
                 <StatsBlock onClick={() => modalHandler(true)}>
                     <label style={{fontSize: "25px"}}>Residents In</label>
-                    <label style={{fontSize: "40px"}}>5</label>
+                    <label style={{fontSize: "40px"}}>3</label>
                 </StatsBlock>
             </Wrapper>
         </Container>
