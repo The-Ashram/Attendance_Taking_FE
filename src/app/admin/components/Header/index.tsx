@@ -21,7 +21,7 @@ export default function Header() {
         <Wrapper>
             <ButtonsWrapper>
                 {isHome ? null : <Button onClick={HomeHandler}>Home</Button>}
-                <Button>Placeholder</Button>
+                {/*<Button>Placeholder</Button>*/}
                 <Button onClick={AccountHandler}>Accounts</Button>
             </ButtonsWrapper>
             <div style={{width: "300px"}}/>

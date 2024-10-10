@@ -1,5 +1,6 @@
 import {ModalWrapper} from "@/app/admin/components/Dashboard/styled";
 import {Table} from "@/app/admin/components/Table/styled";
+import Row from "./Row";
 
 interface ModalContentsProps {
     inModal: boolean
@@ -36,11 +37,7 @@ export default function ModalContents({inModal}: ModalContentsProps) {
                 </thead>
                 <tbody>
                 {data.map((row, index) => (
-                    <tr key={index}>
-                        <td>{row.name}</td>
-                        <td>{row.checkout}</td>
-                        {!inModal && <td>{row.reason}</td>}
-                    </tr>
+                    <Row key={index} row={row} inModal={inModal}/>
                 ))}
                 </tbody>
             </Table>

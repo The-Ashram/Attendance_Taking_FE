@@ -25,6 +25,7 @@ export const Button = styled.button`
     border: aliceblue;
     color: #1a1a1a;
     border-radius: 10px;
+    font-size: 18px;
 
     &:hover {
         background: lightcoral;
