@@ -30,8 +30,8 @@ export default function CreateRModalContents({ visible }: CreateProps) {
                 label="Phase Number"
                 name="phaseNumber"
               />
+              <PasswordInput label="Password" name="accountPassword" />
             </InputDetails>
-            <PasswordInput label="Password" name="accountPassword" />
             <SubmitButton>Submit</SubmitButton>
           </Form>
         </FormWrapper>
