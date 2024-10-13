@@ -19,23 +19,13 @@ export default function Header() {
     router.push("/resident/homepage");
   }
 
-  // function requestHandler() {
-  //   router.push("/resident/requestform");
-  // }
-
   function logoutHandler() {
     router.push("/");
   }
 
   return (
     <Wrapper>
-      {isHomepage ? (
-        <Title>Hello Resident</Title>
-      ) : (
-        <Button onClick={homeHandler}>Home</Button>
-      )}
-
-      {/*<Button onClick={requestHandler}>Submit Request Form</Button>*/}
+      {isHomepage ? null : <Button onClick={homeHandler}>Home</Button>}
       <Button onClick={accountsHandler}>Account</Button>
       <Button onClick={logoutHandler}>Log Out</Button>
     </Wrapper>
