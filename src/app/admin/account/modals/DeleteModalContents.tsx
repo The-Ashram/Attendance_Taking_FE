@@ -1,9 +1,7 @@
 interface DeleteProps {
-    visible: boolean
+  visible: boolean;
 }
 
-export default function DeleteMoalContents({visible}: DeleteProps) {
-    return (<>
-        {visible && <p>To do</p>}
-    </>)
+export default function DeleteModalContents({ visible }: DeleteProps) {
+  return <>{visible && <p>To do</p>}</>;
 }

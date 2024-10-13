@@ -18,7 +18,11 @@ export const Title = styled.div`
   margin-top: 20px;
   font-weight: bold;
   text-decoration: underline;
-  font-size: 10vw;
+  font-size: 8vw;
+`;
+
+export const InputDetails = styled.div`
+  margin-bottom: 20px;
 `;
 
 export const SubmitButton = styled.button`

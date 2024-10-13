@@ -5,7 +5,6 @@ interface Props {
 }
 
 export default function Row({ residentData }: Props) {
-  console.log(residentData.name);
   return (
     <tr>
       <td>{residentData.name}</td>

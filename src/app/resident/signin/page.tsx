@@ -4,11 +4,13 @@ import {
   FormWrapper,
   SubmitButton,
   Title,
-} from "@/app/resident/signin/styled";
+} from "@/app/components/FormComponents/styled";
 import Header from "@/app/resident/components/Header/header";
-import BasicTimePicker from "@/app/resident/components/TimePicker";
-import { InputDetails } from "@/app/resident/signout/styled";
+import BasicTimePicker from "@/app/components/FormComponents/TimePicker";
+import { InputDetails } from "@/app/components/FormComponents/styled";
 import dayjs from "dayjs";
+import InputBox from "@/app/components/FormComponents/InputBox";
+import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 
 const residentData = {
   name: "Bryan",
@@ -26,38 +28,28 @@ export default function Signin() {
       <FormWrapper>
         <Form>
           <InputDetails>
-            <label>
-              <strong>Resident Name:</strong>
-              <input
-                type="text"
-                name="residentName"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
+            <InputDetails>
+              <InputBox
+                name={"residentName"}
                 defaultValue={residentData.name}
+                label={"Name"}
+                disabled
               />
-            </label>
-            <label>
-              <strong>Phone Number</strong>
-              <input
-                type="text"
-                name="phoneNumber"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
+              <InputBox
+                name={"residentNumber"}
                 defaultValue={residentData.telephone}
+                label={"Phone Number"}
+                disabled
               />
-            </label>
-            <label>
-              <strong>Time of Request:</strong>
-              <BasicTimePicker defaultValue={formTime} disabled={true} />
-            </label>
+              <BasicTimePicker
+                defaultValue={formTime}
+                disabled={true}
+                label={"Time of return"}
+              />
+            </InputDetails>
           </InputDetails>
           <InputDetails>
-            <label>
-              <strong>Verified By:</strong>
-              <input
-                type="password"
-                name="verifiedBy"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-              />
-            </label>
+            <PasswordInput label="Verified By:" name="verifiedBy" />
           </InputDetails>
           <SubmitButton type="submit">Submit</SubmitButton>
         </Form>

@@ -8,11 +8,12 @@ import {
   FormWrapper,
   InputDetails,
   Title,
-} from "@/app/resident/signout/styled";
-import BasicTimePicker from "@/app/resident/components/TimePicker";
-import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
-import { SubmitButton } from "@/app/resident/signin/styled";
+  SubmitButton,
+} from "@/app/components/FormComponents/styled";
+import BasicTimePicker from "@/app/components/FormComponents/TimePicker";
+import InputBox from "@/app/components/FormComponents/InputBox";
+import DropdownBox from "@/app/components/FormComponents/Dropdown";
+import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 
 const residentData = {
   name: "Bryan",
@@ -37,66 +38,41 @@ export default function Requestform() {
         <Form>
           {/* Resident Details */}
           <InputDetails>
-            <label>
-              <strong>Resident Name:</strong>
-              <input
-                type="text"
-                name="residentName"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-                defaultValue={residentData.name}
-              />
-            </label>
-            <label>
-              <strong>Phone Number</strong>
-              <input
-                type="text"
-                name="phoneNumber"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-                defaultValue={residentData.telephone}
-              />
-            </label>
-            <label>
-              <strong>Time of Request:</strong>
-              <BasicTimePicker defaultValue={formTime} disabled={true} />
-            </label>
+            <InputBox
+              name={"residentName"}
+              defaultValue={residentData.name}
+              label={"Name"}
+              disabled
+            />
+            <InputBox
+              name={"residentNumber"}
+              defaultValue={residentData.telephone}
+              label={"Phone Number"}
+              disabled
+            />
+            <BasicTimePicker
+              defaultValue={formTime}
+              disabled={true}
+              label={"Time of request"}
+            />
           </InputDetails>
 
           <InputDetails>
-            <label>
-              <strong>Reason</strong>
-              <Dropdown options={options} />
-            </label>
+            <DropdownBox label={"Reason"} options={options} />
           </InputDetails>
 
           <InputDetails>
-            <label>
-              <strong>Remarks</strong>
-              <input
-                type="text"
-                name="remarks"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-              />
-            </label>
+            <InputBox disabled={false} label="Remarks" name="remarks" />
           </InputDetails>
 
           {/* Verified By */}
           <InputDetails>
-            <label>
-              <strong>Verified By:</strong>
-              <input
-                type="password"
-                name="verifiedBy"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-              />
-            </label>
+            <PasswordInput label="Verified By:" name="verifiedBy" />
           </InputDetails>
 
           {/* Approved Duration */}
           <InputDetails>
-            <label>
-              <strong>Approved Duration (Time):</strong>
-              <BasicTimePicker disabled={false} />
-            </label>
+            <BasicTimePicker label={"Approved Time"} disabled={false} />
           </InputDetails>
 
           <SubmitButton type="submit">Submit</SubmitButton>

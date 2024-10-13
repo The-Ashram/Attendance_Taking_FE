@@ -1,7 +1,12 @@
 "use client";
 import Header from "@/app/resident/components/Header/header";
-import { Form, FormWrapper, InputDetails } from "@/app/resident/signout/styled";
-import { SubmitButton } from "@/app/resident/signin/styled";
+import {
+  Form,
+  FormWrapper,
+  InputDetails,
+} from "@/app/components/FormComponents/styled";
+import { SubmitButton } from "@/app/components/FormComponents/styled";
+import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 
 export default function Account() {
   return (
@@ -10,13 +15,7 @@ export default function Account() {
       <FormWrapper>
         <Form>
           <InputDetails>
-            <label>
-              <strong>Change password</strong>
-              <input
-                type="password"
-                style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-              />
-            </label>
+            <PasswordInput label="Change Password" name="password" />
           </InputDetails>
           <SubmitButton>Submit</SubmitButton>
         </Form>
