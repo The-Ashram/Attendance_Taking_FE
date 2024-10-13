@@ -22,6 +22,19 @@ const customStyles = {
   },
 };
 
+const deleteStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    height: "40%",
+    width: "40%",
+  },
+};
+
 export default function Row({ row }: Props) {
   const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -34,11 +47,17 @@ export default function Row({ row }: Props) {
   return (
     <>
       <Modal
-        isOpen={editVisible || deleteVisible}
+        isOpen={editVisible}
         onRequestClose={() => modalHandler()}
         style={customStyles}
       >
         <EditModalContents visible={editVisible} data={row} />
+      </Modal>
+      <Modal
+        isOpen={deleteVisible}
+        onRequestClose={() => modalHandler()}
+        style={deleteStyles}
+      >
         <DeleteModalContents visible={deleteVisible} />
       </Modal>
       <tr>

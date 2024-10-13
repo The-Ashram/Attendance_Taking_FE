@@ -34,3 +34,13 @@ export const SubmitButton = styled.button`
   border: none;
   border-radius: 4px;
 `;
+
+export const CancelButton = styled.button`
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #cccccc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+`;
