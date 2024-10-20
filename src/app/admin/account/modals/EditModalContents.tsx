@@ -43,7 +43,7 @@ export default function EditMoalContents({ visible, data }: EditProps) {
                   disabled={false}
                   label="Employee ID"
                   name="employeeId"
-                  defaultValue={data.employeeId}
+                  defaultValue={data.employeeID}
                 />
               </InputDetails>
             ) : (
