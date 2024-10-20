@@ -5,18 +5,18 @@ import { FormButtons, FormWrapper } from "@/app/resident/homepage/styled";
 import { useRouter } from "next/navigation";
 import ResidentDetails from "../components/ResidentDetails";
 
-// const residentData = {
-//   name: "Bryan",
-//   status: "out",
-//   approvedTime: "12-10-2024 19:30",
-//   reason: "Medical Appt",
-//   remarks: "SGH",
-// };
-
 const residentData = {
   name: "Bryan",
-  status: "in",
+  status: "out",
+  approvedTime: "12-10-2024 19:30",
+  reason: "Medical Appt",
+  remarks: "SGH",
 };
+
+// const residentData = {
+//   name: "Bryan",
+//   status: "in",
+// };
 
 export default function Homepage() {
   const router = useRouter();

@@ -16,6 +16,7 @@ const residentsData = [
     status: "out",
     reason: "Work",
     remarks: "abc company",
+    verifiedby: "Bryan",
   },
 ];
 
@@ -29,6 +30,7 @@ export default function ResidentsTable() {
             <th>Phase</th>
             <th>In</th>
             <th>Out</th>
+            <th>Verified by</th>
             <th>Reason</th>
             <th>Remarks</th>
           </tr>

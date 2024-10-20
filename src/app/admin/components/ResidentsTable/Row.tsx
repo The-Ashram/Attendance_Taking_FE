@@ -11,6 +11,7 @@ export default function Row({ residentData }: Props) {
       <td>{residentData.phase}</td>
       <td>{residentData.status === "in" && <GoDotFill />}</td>
       <td>{residentData.status === "out" && <GoDotFill />}</td>
+      <td>{residentData.verifiedby}</td>
       <td>{residentData.reason}</td>
       <td>{residentData.remarks}</td>
     </tr>

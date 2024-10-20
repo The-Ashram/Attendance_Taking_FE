@@ -1,35 +1,34 @@
-interface Props {
-  name?: string;
-  label?: string;
+import { UseFormRegister, FieldValues, RegisterOptions } from "react-hook-form";
+
+// Define Props for InputBox
+interface Props<T extends FieldValues> {
+  name: string;
+  label: string;
   defaultValue?: string;
-  disabled: boolean;
+  disabled?: boolean;
+  register: UseFormRegister<T>;
+  rules?: RegisterOptions; // Use RegisterOptions for validation rules
 }
 
-export default function InputBox({
+export default function InputBox<T extends FieldValues>({
   name,
   label,
   defaultValue,
   disabled,
-}: Props) {
+  register,
+  rules = {}, // Default to empty object if no rules are provided
+}: Props<T>) {
   return (
     <>
       <label>
         <strong>{label}:</strong>
-        {defaultValue ? (
-          <input
-            type="text"
-            name={name}
-            style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-            defaultValue={defaultValue}
-            disabled={disabled}
-          />
-        ) : (
-          <input
-            type="text"
-            name={name}
-            style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-          />
-        )}
+        <input
+          type="text"
+          defaultValue={defaultValue}
+          style={{ width: "100%", padding: "8px", margin: "8px 0" }}
+          disabled={disabled}
+          {...register(name, rules)} // Ensure proper type casting for register
+        />
       </label>
     </>
   );

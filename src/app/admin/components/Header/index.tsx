@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "react-modal";
 import ReportModal from "@/app/admin/components/Header/ReportModal";
+import Cookies from "js-cookie";
 
 const ReportStyles = {
   content: {
@@ -29,6 +30,9 @@ export default function Header() {
 
   const LogoutHandler = () => {
     //logout stuff
+    Cookies.remove("aT", { path: "/" });
+    Cookies.remove("rT", { path: "/" });
+    Cookies.remove("role", { path: "/" });
     router.push("/");
   };
 
