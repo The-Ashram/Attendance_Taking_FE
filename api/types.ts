@@ -30,6 +30,15 @@ export interface CreateRPayload {
   email: string;
   phoneNumber: string;
   password: string;
+  phaseNumber: Number;
+  role: "resident";
+}
+
+export interface CreateAPayload {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
   employeeID: string;
   role: "admin";
 }
