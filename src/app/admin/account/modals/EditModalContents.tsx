@@ -12,7 +12,7 @@ interface EditProps {
   data: any;
 }
 
-export default function EditMoalContents({ visible, data }: EditProps) {
+export default function EditModalContents({ visible, data }: EditProps) {
   return (
     <>
       {visible && (

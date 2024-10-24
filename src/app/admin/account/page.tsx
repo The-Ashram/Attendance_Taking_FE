@@ -106,14 +106,20 @@ export default function Account() {
             onRequestClose={() => modalHandler()}
             style={customStyles}
           >
-            <CreateAModalContents visible={createAVisible} />
+            <CreateAModalContents
+              visible={createAVisible}
+              closeModal={modalHandler}
+            />
           </Modal>
           <Modal
             isOpen={createRVisible}
             onRequestClose={() => modalHandler()}
             style={customStyles}
           >
-            <CreateRModalContents visible={createRVisible} />
+            <CreateRModalContents
+              visible={createRVisible}
+              closeModal={modalHandler}
+            />
           </Modal>
           <Wrapper>
             <CreateContainer>

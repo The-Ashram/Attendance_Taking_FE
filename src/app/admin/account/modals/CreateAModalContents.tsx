@@ -19,7 +19,7 @@ export default function CreateAModalContents({ visible }: CreateProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreateRPayload>();
+  } = useForm<CreateAPayload>();
 
   const onSubmit = (data: CreateRPayload) => {
     console.log("Form submitted with data:", data);
