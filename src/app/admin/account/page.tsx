@@ -10,6 +10,7 @@ import CreateAModalContents from "@/app/admin/account/modals/CreateAModalContent
 import CreateRModalContents from "@/app/admin/account/modals/CreateRModalContents";
 import Cookies from "js-cookie";
 import { UserResponse } from "../../../../api/types";
+import CreateUModalContents from "@/app/admin/account/modals/CreateUModalContents";
 
 const data = [
   {
@@ -51,12 +52,15 @@ const customStyles = {
 export default function Account() {
   const [createAVisible, setCreateAVisible] = useState(false);
   const [createRVisible, setCreateRVisible] = useState(false);
+  const [createUVisible, setCreateUVisible] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [apiResponse, setApiResponse] = useState<UserResponse | null>(null); // Changed undefined to null for better control flow
   const isAuthenticated = Cookies.get("role") === "admin";
 
   const modalHandler = () => {
     setCreateAVisible(false);
     setCreateRVisible(false);
+    setCreateUVisible(false);
   };
 
   useEffect(() => {
@@ -94,7 +98,7 @@ export default function Account() {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <>
@@ -109,6 +113,7 @@ export default function Account() {
             <CreateAModalContents
               visible={createAVisible}
               closeModal={modalHandler}
+              setRefresh={setRefresh}
             />
           </Modal>
           <Modal
@@ -119,12 +124,30 @@ export default function Account() {
             <CreateRModalContents
               visible={createRVisible}
               closeModal={modalHandler}
+              setRefresh={setRefresh}
+            />
+          </Modal>
+          <Modal
+            isOpen={createUVisible}
+            onRequestClose={() => modalHandler()}
+            style={customStyles}
+          >
+            <CreateUModalContents
+              visible={createUVisible}
+              closeModal={modalHandler}
+              setRefresh={setRefresh}
             />
           </Modal>
           <Wrapper>
             <CreateContainer>
               <Button onClick={() => setCreateAVisible(true)}>
                 Create Admin
+              </Button>
+              <Button
+                style={{ marginLeft: "10px" }}
+                onClick={() => setCreateUVisible(true)}
+              >
+                Create User
               </Button>
               <Button
                 style={{ marginLeft: "10px" }}
@@ -145,7 +168,7 @@ export default function Account() {
               </thead>
               <tbody>
                 {apiResponse?.users.map((row, index) => (
-                  <Row key={index} row={row} />
+                  <Row key={index} row={row} setRefresh={setRefresh} />
                 ))}
               </tbody>
             </Table>

@@ -1,12 +1,13 @@
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import EditModalContents from "@/app/admin/account/modals/EditModalContents";
 import Modal from "react-modal";
 import DeleteModalContents from "./modals/DeleteModalContents";
 
 interface Props {
   row: any;
+  setRefresh: Dispatch<SetStateAction<boolean>>;
 }
 
 const customStyles = {
@@ -35,13 +36,19 @@ const deleteStyles = {
   },
 };
 
-export default function Row({ row }: Props) {
+export default function Row({ row, setRefresh }: Props) {
   const [editVisible, setEditVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
+  const [selectedID, setSelectedID] = useState("");
 
   function modalHandler() {
     setEditVisible(false);
     setDeleteVisible(false);
+  }
+
+  function deleteHandler(row: any) {
+    setDeleteVisible(true);
+    setSelectedID(row.id);
   }
 
   return (
@@ -51,14 +58,24 @@ export default function Row({ row }: Props) {
         onRequestClose={() => modalHandler()}
         style={customStyles}
       >
-        <EditModalContents visible={editVisible} data={row} />
+        <EditModalContents
+          visible={editVisible}
+          data={row}
+          onClose={modalHandler}
+          setRefresh={setRefresh}
+        />
       </Modal>
       <Modal
         isOpen={deleteVisible}
         onRequestClose={() => modalHandler()}
         style={deleteStyles}
       >
-        <DeleteModalContents visible={deleteVisible} />
+        <DeleteModalContents
+          visible={deleteVisible}
+          onClose={modalHandler}
+          id={selectedID}
+          setRefresh={setRefresh}
+        />
       </Modal>
       <tr>
         <td>{row.name}</td>
@@ -72,7 +89,7 @@ export default function Row({ row }: Props) {
         </td>
         <td>
           <MdDeleteOutline
-            onClick={() => setDeleteVisible(true)}
+            onClick={() => deleteHandler(row)}
             style={{ width: "15%", height: "15%" }}
           />
         </td>

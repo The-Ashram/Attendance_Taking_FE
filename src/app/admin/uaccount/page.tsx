@@ -1,31 +1,31 @@
 "use client";
-import Header from "@/app/resident/components/Header/header";
+import { useForm } from "react-hook-form";
+import { UserPatchPayload } from "../../../../api/types";
+import Cookies from "js-cookie";
+import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
 import {
   Form,
   FormWrapper,
   InputDetails,
+  SubmitButton,
 } from "@/app/components/FormComponents/styled";
-import { SubmitButton } from "@/app/components/FormComponents/styled";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
-import { useForm } from "react-hook-form";
-import { ResidentPatchPayload } from "../../../../api/types";
 import { useState } from "react";
-import Cookies from "js-cookie";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import Header from "@/app/admin/components/Header";
 
 export default function Account() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResidentPatchPayload>();
+  } = useForm<UserPatchPayload>();
 
   const [errorMessage, setErrorMessage] = useState("");
   const [changed, setChanged] = useState(false);
   const aT = Cookies.get("aT");
   const id = Cookies.get("id");
 
-  function SubmitHandler(data: ResidentPatchPayload) {
+  function SubmitHandler(data: UserPatchPayload) {
     data.id = id;
     const updateUser = async () => {
       const response = await fetch(

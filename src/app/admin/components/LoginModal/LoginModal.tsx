@@ -64,6 +64,16 @@ export default function LoginModal() {
           secure: true,
           sameSite: "Strict",
         });
+        Cookies.set("id", responseData.user.id, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
+        Cookies.set("name", responseData.user.name, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
       }
     } catch (error) {
       console.error(

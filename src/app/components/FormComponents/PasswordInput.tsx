@@ -1,11 +1,16 @@
-import { UseFormRegister, FieldValues, RegisterOptions } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldValues,
+  RegisterOptions,
+  Path,
+} from "react-hook-form";
 
 // Define Props for PasswordInput
 interface Props<T extends FieldValues> {
-  name: keyof T;
+  name: Path<T>;
   label: string;
   register: UseFormRegister<T>;
-  rules?: RegisterOptions; // Validation rules for the password field
+  rules?: RegisterOptions<T, Path<T>>; // Validation rules for the password field
 }
 
 export default function PasswordInput<T extends FieldValues>({
@@ -21,7 +26,7 @@ export default function PasswordInput<T extends FieldValues>({
         <input
           type="password"
           style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-          {...register(name as string, rules)} // Registering the password input
+          {...register(name, rules)} // Registering the password input
         />
       </label>
     </>

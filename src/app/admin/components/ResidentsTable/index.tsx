@@ -1,26 +1,25 @@
 import { Table } from "@/app/admin/components/Table/styled";
 import { Container } from "@/app/admin/components/ResidentsTable/styled";
 import Row from "@/app/admin/components/ResidentsTable/Row";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import Cookies from "js-cookie";
+import {
+  AttendanceResponse,
+  DayAttendanceResponse,
+  UserResponse,
+} from "../../../../../api/types";
 
-const residentsData = [
-  {
-    name: "a",
-    phase: "3",
-    status: "in",
-    reason: "Medical Appt",
-    remarks: "SGH",
-  },
-  {
-    name: "b",
-    phase: "3",
-    status: "out",
-    reason: "Work",
-    remarks: "abc company",
-    verifiedby: "Bryan",
-  },
-];
+interface Props {
+  attendanceData: DayAttendanceResponse[];
+  userData: UserResponse | null;
+}
 
-export default function ResidentsTable() {
+export default function ResidentsTable({ attendanceData, userData }: Props) {
+  const residents = userData?.users.filter((u) => u.role === "resident");
+  const others = userData?.users.filter(
+    (u) => u.role === "admin" || u.role === "user",
+  );
   return (
     <Container>
       <Table>
@@ -36,8 +35,13 @@ export default function ResidentsTable() {
           </tr>
         </thead>
         <tbody>
-          {residentsData.map((rd, index) => (
-            <Row residentData={rd} key={index} />
+          {residents?.map((u, index) => (
+            <Row
+              attendanceData={attendanceData}
+              userData={u}
+              key={index}
+              adminData={others}
+            />
           ))}
         </tbody>
       </Table>
