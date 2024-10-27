@@ -5,9 +5,11 @@ import {
 } from "@/app/resident/components/ResidentDetails/styled";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { AttendanceResponse } from "../../../../../api/types";
+import Cookies from "js-cookie";
 
 interface Props {
-  residentData: any;
+  residentData: AttendanceResponse | null;
 }
 
 export default function ResidentDetails({ residentData }: Props) {
@@ -27,21 +29,22 @@ export default function ResidentDetails({ residentData }: Props) {
     return () => clearInterval(intervalId);
   }, []);
 
+  const name = Cookies.get("name");
   return (
     <Wrapper>
       <Date>{timeNow}</Date>
-      <Text>Hello {residentData.name}</Text>
-      {residentData.status === "out" && (
+      <Text>Hello {name}</Text>
+      {residentData?.status === "Out" && (
         <>
           <Text>You are approved for</Text>
-          <Text>{residentData.reason}</Text>
+          <Text>{residentData?.reason}</Text>
           <Text>Please be back by</Text>
-          <Text>{residentData.approvedTime}</Text>
+          <Text>{residentData?.returnBy}</Text>
         </>
       )}
-      {residentData.status === "in" && (
+      {residentData?.status === "In" && (
         <>
-          <Text>Good day!</Text>
+          <Text>Good day! Click below to Sign Out</Text>
         </>
       )}
     </Wrapper>

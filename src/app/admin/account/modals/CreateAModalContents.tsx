@@ -7,22 +7,53 @@ import {
 import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
-import { CreateRPayload } from "../../../../../api/types";
+import { CreateAPayload, CreateRPayload } from "../../../../../api/types";
 import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { Dispatch, SetStateAction, useState } from "react";
+import Cookies from "js-cookie";
+import { router } from "next/client";
 
 interface CreateProps {
   visible: boolean;
+  closeModal: () => void;
+  setRefresh: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function CreateAModalContents({ visible }: CreateProps) {
+export default function CreateAModalContents({
+  visible,
+  closeModal,
+  setRefresh,
+}: CreateProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<CreateAPayload>();
+  const [errorMessage, setErrorMessage] = useState("");
+  const onSubmit = async (data: CreateAPayload) => {
+    setErrorMessage("");
+    data.role = "admin";
+    const token = Cookies.get("aT");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      },
+    );
 
-  const onSubmit = (data: CreateRPayload) => {
-    console.log("Form submitted with data:", data);
+    if (!response.ok) {
+      const errorData = await response.text();
+      setErrorMessage(errorData.slice(1, -2));
+    } else {
+      closeModal();
+      setRefresh((s) => !s);
+      router.reload();
+    }
   };
 
   return (
@@ -68,11 +99,11 @@ export default function CreateAModalContents({ visible }: CreateProps) {
                     message: "Phone number must be numeric",
                   },
                   minLength: {
-                    value: 9,
+                    value: 8,
                     message: "Phone number must be 9 digits",
                   },
                   maxLength: {
-                    value: 9,
+                    value: 8,
                     message: "Phone number must be 9 digits",
                   },
                 }}
@@ -81,7 +112,7 @@ export default function CreateAModalContents({ visible }: CreateProps) {
                 <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>
               )}
 
-              <PasswordInput<CreateRPayload>
+              <PasswordInput
                 name="password"
                 label="Password"
                 register={register}
@@ -106,6 +137,7 @@ export default function CreateAModalContents({ visible }: CreateProps) {
               Submit
             </SubmitButton>
           </Form>
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </FormWrapper>
       )}
     </>

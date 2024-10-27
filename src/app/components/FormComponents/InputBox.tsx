@@ -1,13 +1,18 @@
-import { UseFormRegister, FieldValues, RegisterOptions } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldValues,
+  RegisterOptions,
+  Path,
+} from "react-hook-form";
 
 // Define Props for InputBox
 interface Props<T extends FieldValues> {
-  name: string;
+  name: Path<T>;
   label: string;
   defaultValue?: string;
   disabled?: boolean;
   register: UseFormRegister<T>;
-  rules?: RegisterOptions; // Use RegisterOptions for validation rules
+  rules?: RegisterOptions<T, Path<T>>; // Use RegisterOptions for validation rules
 }
 
 export default function InputBox<T extends FieldValues>({

@@ -64,6 +64,16 @@ export default function LoginModal() {
           secure: true,
           sameSite: "Strict",
         });
+        Cookies.set("id", responseData.user.id, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
+        Cookies.set("name", responseData.user.name, {
+          expires: 1,
+          secure: true,
+          sameSite: "Strict",
+        });
       }
     } catch (error) {
       console.error(
@@ -82,7 +92,7 @@ export default function LoginModal() {
       apiresponse?.user.role === "user"
     ) {
       router.push("/admin/homepage"); // Redirect to admin dashboard
-    } else if (apiresponse?.user.role === "user") {
+    } else if (apiresponse?.user.role === "resident") {
       router.push("/resident/homepage");
     }
   }, [apiresponse, router]);

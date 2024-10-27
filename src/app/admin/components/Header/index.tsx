@@ -33,11 +33,17 @@ export default function Header() {
     Cookies.remove("aT", { path: "/" });
     Cookies.remove("rT", { path: "/" });
     Cookies.remove("role", { path: "/" });
+    Cookies.remove("id", { path: "/" });
     router.push("/");
   };
 
   const AccountHandler = () => {
-    router.push("/admin/account");
+    const role = Cookies.get("role");
+    if (role === "admin") {
+      router.push("/admin/account");
+    } else {
+      router.push("/admin/uaccount");
+    }
   };
   const HomeHandler = () => {
     router.push("/admin/homepage");

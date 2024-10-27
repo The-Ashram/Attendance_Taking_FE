@@ -7,7 +7,7 @@ import {
 import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
-import { CreateRPayload } from "../../../../../api/types";
+import { CreateUPayload } from "../../../../../api/types";
 import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
 import { Dispatch, SetStateAction, useState } from "react";
 import Cookies from "js-cookie";
@@ -19,7 +19,7 @@ interface CreateProps {
   setRefresh: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function CreateRModalContents({
+export default function CreateUModalContents({
   visible,
   closeModal,
   setRefresh,
@@ -28,12 +28,11 @@ export default function CreateRModalContents({
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreateRPayload>();
+  } = useForm<CreateUPayload>();
   const [errorMessage, setErrorMessage] = useState("");
-
-  const onSubmit = async (data: CreateRPayload) => {
+  const onSubmit = async (data: CreateUPayload) => {
     setErrorMessage("");
-    data.role = "resident";
+    data.role = "user";
     const token = Cookies.get("aT");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
@@ -64,29 +63,34 @@ export default function CreateRModalContents({
           <Form onSubmit={handleSubmit(onSubmit)}>
             <InputDetails>
               <InputBox
-                label="Name"
                 name="name"
+                label="Name"
                 register={register}
-                rules={{ required: "Please fill up your name!" }}
-                disabled={false}
+                rules={{ required: "Please fill up your name!" }} // Pass validation rules here
               />
               {errors.name && (
                 <ErrorMessage>{errors.name.message}</ErrorMessage>
               )}
+
               <InputBox
-                label="Email"
                 name="email"
+                label="Email"
                 register={register}
-                rules={{ required: "Please fill up your email!" }}
-                disabled={false}
+                rules={{
+                  required: "Please fill up your email!",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "Invalid email format",
+                  },
+                }}
               />
               {errors.email && (
                 <ErrorMessage>{errors.email.message}</ErrorMessage>
               )}
+
               <InputBox
-                disabled={false}
-                label="Phone Number"
                 name="phoneNumber"
+                label="Phone Number"
                 register={register}
                 rules={{
                   required: "Please fill up your phone number!",
@@ -96,42 +100,44 @@ export default function CreateRModalContents({
                   },
                   minLength: {
                     value: 8,
-                    message: "Phone number must be 9 digits",
+                    message: "Phone number must be 8 digits",
                   },
                   maxLength: {
                     value: 8,
-                    message: "Phone number must be 9 digits",
+                    message: "Phone number must be 8 digits",
                   },
                 }}
               />
               {errors.phoneNumber && (
                 <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>
               )}
-              <InputBox
-                disabled={false}
-                label="Phase Number"
-                name="phaseNumber"
-                register={register}
-                rules={{ required: "Please fill up Phase Number!" }}
-              />
-              {errors.phaseNumber && (
-                <ErrorMessage>{errors.phaseNumber.message}</ErrorMessage>
-              )}
+
               <PasswordInput
-                label="Password"
                 name="password"
+                label="Password"
                 register={register}
                 rules={{ required: "Please fill up your password!" }}
               />
               {errors.password && (
                 <ErrorMessage>{errors.password.message}</ErrorMessage>
               )}
+
+              <InputBox
+                name="employeeID"
+                label="Employee ID"
+                register={register}
+                rules={{ required: "Please fill up Employee ID!" }}
+              />
+              {errors.employeeID && (
+                <ErrorMessage>{errors.employeeID.message}</ErrorMessage>
+              )}
             </InputDetails>
-            <SubmitButton>Submit</SubmitButton>
+
+            <SubmitButton type="submit" disabled={isSubmitting}>
+              Submit
+            </SubmitButton>
           </Form>
-          {errorMessage && (
-            <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-          )}
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </FormWrapper>
       )}
     </>
