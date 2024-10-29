@@ -16,8 +16,8 @@ interface Props {
 }
 
 export default function ResidentsTable({ attendanceData, userData }: Props) {
-  const residents = userData?.users.filter((u) => u.role === "resident");
-  const others = userData?.users.filter(
+  const residents = userData?.users?.filter((u) => u.role === "resident");
+  const others = userData?.users?.filter(
     (u) => u.role === "admin" || u.role === "user",
   );
   return (

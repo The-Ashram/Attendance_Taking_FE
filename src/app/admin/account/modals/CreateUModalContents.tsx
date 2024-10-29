@@ -8,7 +8,7 @@ import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
 import { CreateUPayload } from "../../../../../api/types";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { Dispatch, SetStateAction, useState } from "react";
 import Cookies from "js-cookie";
 import { router } from "next/client";

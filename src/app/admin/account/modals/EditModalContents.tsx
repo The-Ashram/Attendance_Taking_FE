@@ -7,14 +7,11 @@ import {
 import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
-import {
-  AdminUserPatchPayload,
-  CreateRPayload,
-} from "../../../../../api/types";
+import { AdminUserPatchPayload } from "../../../../../api/types";
 import Cookies from "js-cookie";
 import { router } from "next/client";
 import { Dispatch, SetStateAction, useState } from "react";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 
 interface EditProps {
   visible: boolean;
@@ -39,7 +36,9 @@ export default function EditModalContents({
 
   const SubmitHandler = async (values: AdminUserPatchPayload) => {
     setErrorMessage("");
-    values.id = data.id;
+    const filteredData = Object.fromEntries(
+      Object.entries(values).filter(([_, value]) => value !== ""),
+    );
     const token = Cookies.get("aT");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/user/${data.id}`,
@@ -49,7 +48,7 @@ export default function EditModalContents({
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(filteredData),
       },
     );
 

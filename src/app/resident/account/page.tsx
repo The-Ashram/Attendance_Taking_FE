@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { ResidentPatchPayload } from "../../../../api/types";
 import { useState } from "react";
 import Cookies from "js-cookie";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 
 export default function Account() {
   const {

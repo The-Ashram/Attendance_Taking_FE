@@ -16,7 +16,7 @@ import { SignInPayload } from "../../../../api/types";
 import Cookies from "js-cookie";
 import { router } from "next/client";
 import { useState } from "react";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 
 const residentData = {
   name: "Bryan",

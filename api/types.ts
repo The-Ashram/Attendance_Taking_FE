@@ -63,7 +63,7 @@ export interface SignInPayload {
 }
 
 export interface SignOutPayload {
-  userId: string | undefined;
+  userId: string | null;
   attendanceDate: Dayjs;
   checkOutTime: Dayjs;
   verifiedBy: number;
@@ -89,7 +89,6 @@ export interface UserPatchPayload {
 }
 
 export interface AdminUserPatchPayload {
-  id?: string;
   name?: string;
   password?: string;
   phaseNumber?: string;

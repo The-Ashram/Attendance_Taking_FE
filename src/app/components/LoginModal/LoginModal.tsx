@@ -4,12 +4,13 @@ import {
   InputBox,
   InputWrapper,
   Wrapper,
-} from "@/app/admin/components/LoginModal/styled";
+} from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { LoginPayload, LoginResponse } from "../../../../../api/types";
+import { LoginPayload, LoginResponse } from "../../../../api/types";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import api from "../../../../api/axios";
 
 export default function LoginModal() {
   const router = useRouter();
@@ -27,61 +28,25 @@ export default function LoginModal() {
   const onLogin = async (data: LoginPayload) => {
     setLoginError(false); // Reset the login error state before making the request
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        },
-      );
+    const response = await api.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+      data,
+    );
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        setLoginError(true);
-        setErrorMessage(errorData);
-      } else {
-        const responseData = await response.json();
-        setApiResponse(responseData);
-
-        // Store access and refresh tokens in cookies
-        Cookies.set("aT", responseData.accessToken, {
-          expires: 1, // 1 day expiration
-          secure: true, // Ensures the cookie is sent only over HTTPS
-          sameSite: "Strict", // Prevents CSRF attacks
-        });
-
-        Cookies.set("rT", responseData.refreshToken, {
-          expires: 7, // 7 days expiration
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("role", responseData.user.role, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("id", responseData.user.id, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("name", responseData.user.name, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-      }
-    } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error,
-      );
+    if (response.status != 200) {
+      const errorData = response.statusText;
       setLoginError(true);
-      setErrorMessage("An unexpected error occurred. Please try again.");
+      setErrorMessage(errorData);
+    } else {
+      const responseData = response.data;
+      setApiResponse(responseData);
+
+      // Store access and refresh tokens in cookies
+      localStorage.setItem("accessToken", responseData.accessToken);
+      localStorage.setItem("refreshToken", responseData.refreshToken);
+      localStorage.setItem("role", responseData.user.role);
+      localStorage.setItem("id", responseData.user.id);
+      localStorage.setItem("name", responseData.user.name);
     }
   };
 

@@ -20,6 +20,7 @@ export default function Header() {
   }
 
   function logoutHandler() {
+    localStorage.clear();
     router.push("/");
   }
 

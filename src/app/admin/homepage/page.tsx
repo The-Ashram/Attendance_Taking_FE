@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { Date } from "./styled";
 import Cookies from "js-cookie";
 import { DayAttendanceResponse, UserResponse } from "../../../../api/types";
+import api from "../../../../api/axios";
 
 export default function HomePage() {
   const [timeNow, setTime] = useState(
@@ -25,40 +26,30 @@ export default function HomePage() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const day = dayjs();
-  const aT = Cookies.get("aT");
+  const day = dayjs().format("YYYY-MM-DD");
   const [attendanceData, setAttendanceData] = useState<DayAttendanceResponse[]>(
     [],
   );
   const [userData, setUserData] = useState<UserResponse | null>(null);
   useEffect(() => {
     const getAttendanceForTheDay = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/attendance?date=${day}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${aT}`,
-          },
-        },
+      const response = await api.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/attendance`,
+        { params: { date: `${day}` } },
       );
 
-      const data = await response.json();
-      setAttendanceData(data.attendances);
+      if (response.status === 404) {
+        setAttendanceData([]);
+      } else {
+        const data = await response.data;
+        setAttendanceData(data.attendances);
+      }
     };
     const getUsers = async () => {
-      const userResponse = await fetch(
+      const userResponse = await api.get(
         `${process.env.NEXT_PUBLIC_API_URL}/user`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${aT}`,
-          },
-        },
       );
-      const userData = await userResponse.json();
+      const userData = await userResponse.data;
       setUserData(userData);
     };
     getAttendanceForTheDay();

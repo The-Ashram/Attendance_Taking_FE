@@ -5,7 +5,7 @@ import {
 } from "@/app/components/FormComponents/styled";
 import Cookies from "js-cookie";
 import { Dispatch, SetStateAction, useState } from "react";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
 
 interface DeleteProps {

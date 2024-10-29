@@ -18,7 +18,7 @@ import Cookies from "js-cookie";
 import { FormProvider, useForm } from "react-hook-form";
 import { SignOutPayload } from "../../../../api/types";
 import { useState } from "react";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 
 const residentData = {
   name: "Bryan",
@@ -38,10 +38,10 @@ export default function Requestform() {
   const [errorMessage, setErrorMessage] = useState("");
   const timeNow = dayjs();
   const formTime = timeNow.format("YYYY-MM-DDTHH:mm");
-  const name = Cookies.get("name");
+  const name = localStorage.getItem("name");
   const methods = useForm<SignOutPayload>();
-  const userId = Cookies.get("id");
-  const aT = Cookies.get("aT");
+  const userId = localStorage.getItem("id");
+  const aT = localStorage.getItem("accessToken");
 
   function SubmitHandler(data: SignOutPayload) {
     data.userId = userId;
@@ -83,7 +83,7 @@ export default function Requestform() {
                 <strong>Name:</strong>
                 <input
                   type="text"
-                  defaultValue={name}
+                  defaultValue={name ?? ""}
                   style={{ width: "100%", padding: "8px", margin: "8px 0" }}
                   disabled={true}
                 />

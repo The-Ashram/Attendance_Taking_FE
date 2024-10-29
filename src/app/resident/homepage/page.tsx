@@ -7,6 +7,7 @@ import ResidentDetails from "../components/ResidentDetails";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { AttendanceResponse, UserResponse } from "../../../../api/types";
+import api from "../../../../api/axios";
 
 const residentData = {
   name: "Bryan",
@@ -36,21 +37,13 @@ export default function Homepage() {
   }
 
   useEffect(() => {
-    const id = Cookies.get("id");
-    const aT = Cookies.get("aT");
+    const id = localStorage.getItem("id");
     const fetchData = async () => {
-      const response = await fetch(
+      const response = await api.get(
         `${process.env.NEXT_PUBLIC_API_URL}/attendance/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${aT}`,
-          },
-        },
       );
 
-      const data = await response.json();
+      const data = await response.data;
       setApiResponse(data.attendances[0]);
     };
     fetchData();

@@ -30,10 +30,7 @@ export default function Header() {
 
   const LogoutHandler = () => {
     //logout stuff
-    Cookies.remove("aT", { path: "/" });
-    Cookies.remove("rT", { path: "/" });
-    Cookies.remove("role", { path: "/" });
-    Cookies.remove("id", { path: "/" });
+    localStorage.clear();
     router.push("/");
   };
 
