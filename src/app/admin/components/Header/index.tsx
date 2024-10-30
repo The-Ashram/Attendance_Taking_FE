@@ -7,7 +7,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "react-modal";
 import ReportModal from "@/app/admin/components/Header/ReportModal";
-import Cookies from "js-cookie";
 
 const ReportStyles = {
   content: {
@@ -35,7 +34,7 @@ export default function Header() {
   };
 
   const AccountHandler = () => {
-    const role = Cookies.get("role");
+    const role = localStorage.getItem("role");
     if (role === "admin") {
       router.push("/admin/account");
     } else {

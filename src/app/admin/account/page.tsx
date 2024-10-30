@@ -8,33 +8,10 @@ import Modal from "react-modal";
 import Row from "./Row";
 import CreateAModalContents from "@/app/admin/account/modals/CreateAModalContents";
 import CreateRModalContents from "@/app/admin/account/modals/CreateRModalContents";
-import Cookies from "js-cookie";
 import { UserResponse } from "../../../../api/types";
 import CreateUModalContents from "@/app/admin/account/modals/CreateUModalContents";
-
-const data = [
-  {
-    name: "abc",
-    email: "abc@gm.com",
-    phoneNumber: 999,
-    phaseNumber: 3,
-    role: "resident",
-  },
-  {
-    name: "abcd",
-    email: "abcd@gm.com",
-    phoneNumber: 999,
-    phaseNumber: 3,
-    role: "resident",
-  },
-  {
-    name: "dcba",
-    email: "abcd@gm.com",
-    phoneNumber: 999,
-    role: "admin",
-    employeeId: 1234,
-  },
-];
+import api from "../../../../api/axios";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 
 const customStyles = {
   content: {
@@ -54,8 +31,9 @@ export default function Account() {
   const [createRVisible, setCreateRVisible] = useState(false);
   const [createUVisible, setCreateUVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [apiResponse, setApiResponse] = useState<UserResponse | null>(null); // Changed undefined to null for better control flow
-  const isAuthenticated = Cookies.get("role") === "admin";
+  const isAuthenticated = localStorage.getItem("role") === "admin";
 
   const modalHandler = () => {
     setCreateAVisible(false);
@@ -65,38 +43,11 @@ export default function Account() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const token = Cookies.get("aT");
-        if (!token) {
-          console.error("Please re-login");
-          return;
-        }
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/user`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setApiResponse(data);
-      } catch (error) {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error,
-        );
-      }
+      await api
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/user`)
+        .then((r) => setApiResponse(r.data))
+        .catch((r) => setErrorMsg(r.response.data));
     };
-
     fetchData();
   }, [refresh]);
 
@@ -161,17 +112,21 @@ export default function Account() {
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Phone Number</th>
                   <th>Role</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
-                {apiResponse?.users.map((row, index) => (
-                  <Row key={index} row={row} setRefresh={setRefresh} />
-                ))}
+                {apiResponse?.users
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((row, index) => (
+                    <Row key={index} row={row} setRefresh={setRefresh} />
+                  ))}
               </tbody>
             </Table>
+            {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
           </Wrapper>
         </>
       )}

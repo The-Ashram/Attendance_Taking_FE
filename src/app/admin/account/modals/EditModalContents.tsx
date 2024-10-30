@@ -8,10 +8,10 @@ import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
 import { AdminUserPatchPayload } from "../../../../../api/types";
-import Cookies from "js-cookie";
 import { router } from "next/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
+import api from "../../../../../api/axios";
 
 interface EditProps {
   visible: boolean;
@@ -39,27 +39,14 @@ export default function EditModalContents({
     const filteredData = Object.fromEntries(
       Object.entries(values).filter(([_, value]) => value !== ""),
     );
-    const token = Cookies.get("aT");
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/${data.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(filteredData),
-      },
-    );
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      setErrorMessage(errorData);
-    } else {
-      onClose();
-      setRefresh((s) => !s);
-      router.reload();
-    }
+    await api
+      .patch(`${process.env.NEXT_PUBLIC_API_URL}/user/${data.id}`, filteredData)
+      .then(() => {
+        onClose();
+        setRefresh((s) => !s);
+        router.reload();
+      })
+      .catch((r) => setErrorMessage(r.response.data));
   };
 
   return (
@@ -93,7 +80,7 @@ export default function EditModalContents({
                   register={register}
                 />
                 <PasswordInput
-                  label="Password"
+                  label="Password (Leave empty if not changing password)"
                   name={"password"}
                   register={register}
                 />
@@ -102,6 +89,13 @@ export default function EditModalContents({
                   label="Employee ID"
                   name="employeeId"
                   defaultValue={data.employeeID}
+                  register={register}
+                />
+                <InputBox
+                  disabled={false}
+                  label="Role"
+                  name="role"
+                  defaultValue={data.role}
                   register={register}
                 />
               </InputDetails>
@@ -136,15 +130,13 @@ export default function EditModalContents({
                   register={register}
                 />
                 <PasswordInput
-                  label="Password"
+                  label="Password (Leave empty if not changing password)"
                   name="password"
                   register={register}
                 />
               </InputDetails>
             )}
-            {errorMessage && (
-              <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-            )}
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <SubmitButton>Submit</SubmitButton>
           </Form>
         </FormWrapper>

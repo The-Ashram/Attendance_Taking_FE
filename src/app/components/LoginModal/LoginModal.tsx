@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { LoginPayload, LoginResponse } from "../../../../api/types";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import api from "../../../../api/axios";
 
 export default function LoginModal() {
@@ -27,27 +26,20 @@ export default function LoginModal() {
 
   const onLogin = async (data: LoginPayload) => {
     setLoginError(false); // Reset the login error state before making the request
-
-    const response = await api.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-      data,
-    );
-
-    if (response.status != 200) {
-      const errorData = response.statusText;
-      setLoginError(true);
-      setErrorMessage(errorData);
-    } else {
-      const responseData = response.data;
-      setApiResponse(responseData);
-
-      // Store access and refresh tokens in cookies
-      localStorage.setItem("accessToken", responseData.accessToken);
-      localStorage.setItem("refreshToken", responseData.refreshToken);
-      localStorage.setItem("role", responseData.user.role);
-      localStorage.setItem("id", responseData.user.id);
-      localStorage.setItem("name", responseData.user.name);
-    }
+    await api
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
+      .then((r) => {
+        setApiResponse(r.data); // Store access and refresh tokens in localstorage
+        localStorage.setItem("accessToken", r.data.accessToken);
+        localStorage.setItem("refreshToken", r.data.refreshToken);
+        localStorage.setItem("role", r.data.user.role);
+        localStorage.setItem("id", r.data.user.id);
+        localStorage.setItem("name", r.data.user.name);
+      })
+      .catch((r) => {
+        setLoginError(true);
+        setErrorMessage(r.response.data);
+      });
   };
 
   // Effect to handle redirection once the apiresponse is received
@@ -85,9 +77,7 @@ export default function LoginModal() {
           />
           <ErrorMessage>{errors.password?.message as string}</ErrorMessage>
         </InputWrapper>
-        {isLoginError && (
-          <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-        )}
+        {isLoginError && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <InputWrapper>
           <CTAButton type="submit">Submit</CTAButton>
         </InputWrapper>

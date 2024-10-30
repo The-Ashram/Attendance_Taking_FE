@@ -9,19 +9,13 @@ import Header from "@/app/resident/components/Header/header";
 import BasicTimePicker from "@/app/components/FormComponents/TimePicker";
 import { InputDetails } from "@/app/components/FormComponents/styled";
 import dayjs from "dayjs";
-import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
 import { SignInPayload } from "../../../../api/types";
-import Cookies from "js-cookie";
 import { router } from "next/client";
 import { useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
-
-const residentData = {
-  name: "Bryan",
-  telephone: "999",
-};
+import api from "../../../../api/axios";
 
 export default function Signin() {
   const timeNow = dayjs();
@@ -35,26 +29,26 @@ export default function Signin() {
   } = useForm<SignInPayload>();
 
   const [errorMessage, setErrorMessage] = useState("");
-  const onSubmit = async (data: SignInPayload) => {
-    const token = Cookies.get("aT");
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/attendance/update`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      },
-    );
+  const name = localStorage.getItem("name");
+  const SubmitHandler = (data: SignInPayload) => {
+    data.id = localStorage.getItem("latestAttendanceId");
+    data.status = "In";
+    data.userId = localStorage.getItem("id");
+    data.attendanceDate = dayjs().format("YYYY-MM-DD");
+    const updateAttendance = async () => {
+      const response = await api.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/attendance/${data.userId}`,
+        data,
+      );
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      setErrorMessage(errorData.slice(1, -2));
-    } else {
-      router.reload();
-    }
+      if (response.status !== 200) {
+        const errorData = response.statusText;
+        setErrorMessage(errorData.slice(1, -2));
+      } else {
+        router.push("/resident/homepage");
+      }
+    };
+    updateAttendance();
   };
 
   return (
@@ -62,25 +56,18 @@ export default function Signin() {
       <Header />
       <Title>Sign In</Title>
       <FormWrapper>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(SubmitHandler)}>
           <InputDetails>
             <InputDetails>
-              <InputBox
-                name={"residentName"}
-                defaultValue={residentData.name}
-                label={"Name"}
-                disabled
-                register={register}
-                rules={{ required: "Please fill up your name!" }}
-              />
-              <InputBox
-                name={"residentNumber"}
-                defaultValue={residentData.telephone}
-                label={"Phone Number"}
-                disabled
-                register={register}
-                rules={{ required: "Please fill up your Phone Number!" }}
-              />
+              <label>
+                <strong>Name:</strong>
+                <input
+                  type="text"
+                  defaultValue={name ?? ""}
+                  style={{ width: "100%", padding: "8px", margin: "8px 0" }}
+                  disabled={true}
+                />
+              </label>
               <BasicTimePicker
                 defaultValue={formTime}
                 disabled={true}
@@ -98,9 +85,7 @@ export default function Signin() {
               rules={{ required: "Please ask Duty Officer to enter!" }}
             />
           </InputDetails>
-          {errorMessage && (
-            <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-          )}
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           <SubmitButton type="submit">Submit</SubmitButton>
         </Form>
       </FormWrapper>

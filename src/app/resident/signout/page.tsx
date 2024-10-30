@@ -14,18 +14,20 @@ import BasicTimePicker from "@/app/components/FormComponents/TimePicker";
 import InputBox from "@/app/components/FormComponents/InputBox";
 import DropdownBox from "@/app/components/FormComponents/Dropdown";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
-import Cookies from "js-cookie";
 import { FormProvider, useForm } from "react-hook-form";
 import { SignOutPayload } from "../../../../api/types";
 import { useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
-
-const residentData = {
-  name: "Bryan",
-  telephone: "999",
-};
+import api from "../../../../api/axios";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 const options = ["Report Sick", "Medical Appointment", "Work", "Job Interview"];
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.tz.setDefault("Asia/Singapore");
 
 export default function Requestform() {
   const {
@@ -33,38 +35,42 @@ export default function Requestform() {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<SignOutPayload>();
+  } = useForm<SignOutPayload>({
+    defaultValues: {
+      userId: null,
+      attendanceDate: "",
+      checkOutTime: dayjs().tz("Asia/Singapore").format("YYYY-MM-DDTHH:mm"),
+      returnBy: dayjs().tz("Asia/Singapore").format("YYYY-MM-DDTHH:mm"),
+      reason: "",
+      status: "Out",
+      remarks: "",
+    },
+  });
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-  const timeNow = dayjs();
+  const timeNow = dayjs.tz();
   const formTime = timeNow.format("YYYY-MM-DDTHH:mm");
   const name = localStorage.getItem("name");
   const methods = useForm<SignOutPayload>();
   const userId = localStorage.getItem("id");
-  const aT = localStorage.getItem("accessToken");
 
   function SubmitHandler(data: SignOutPayload) {
     data.userId = userId;
+    data.attendanceDate = dayjs().format("YYYY-MM-DD");
+    data.status = "Out";
+    data.returnBy = "";
+    const filteredData = Object.fromEntries(
+      Object.entries(data).filter(([_, value]) => value !== ""),
+    );
     const createAttendance = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/attendance/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${aT}`,
-          },
-          body: JSON.stringify(data),
-        },
-      );
-      if (!response.ok) {
-        const errorData = await response.text();
-        setErrorMessage(errorData);
-      } else {
-        router.push("/resident/homepage");
-      }
+      await api
+        .post(
+          `${process.env.NEXT_PUBLIC_API_URL}/attendance/create`,
+          filteredData,
+        )
+        .then(() => router.push("/resident/homepage"))
+        .catch((r) => setErrorMessage(r.response.data));
     };
-
     createAttendance();
   }
 
@@ -88,12 +94,6 @@ export default function Requestform() {
                   disabled={true}
                 />
               </label>
-              {/*<InputBox*/}
-              {/*  name={"residentNumber"}*/}
-              {/*  defaultValue={residentData.telephone}*/}
-              {/*  label={"Phone Number"}*/}
-              {/*  disabled*/}
-              {/*/>*/}
               <BasicTimePicker
                 defaultValue={formTime}
                 disabled={true}
@@ -102,7 +102,6 @@ export default function Requestform() {
                 control={control}
               />
             </InputDetails>
-
             <InputDetails>
               <DropdownBox
                 label={"Reason"}
@@ -141,9 +140,7 @@ export default function Requestform() {
                 name={"returnBy"}
               />
             </InputDetails>
-            {errorMessage && (
-              <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-            )}
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <SubmitButton type="submit">Submit</SubmitButton>
           </Form>
         </FormProvider>

@@ -5,22 +5,8 @@ import { FormButtons, FormWrapper } from "@/app/resident/homepage/styled";
 import { useRouter } from "next/navigation";
 import ResidentDetails from "../components/ResidentDetails";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { AttendanceResponse, UserResponse } from "../../../../api/types";
+import { AttendanceResponse } from "../../../../api/types";
 import api from "../../../../api/axios";
-
-const residentData = {
-  name: "Bryan",
-  status: "out",
-  approvedTime: "12-10-2024 19:30",
-  reason: "Medical Appt",
-  remarks: "SGH",
-};
-
-// const residentData = {
-//   name: "Bryan",
-//   status: "in",
-// };
 
 export default function Homepage() {
   const router = useRouter();
@@ -29,7 +15,8 @@ export default function Homepage() {
   );
 
   function requestHandler() {
-    if (residentData.status === "Out") {
+    if (apiResponse?.status === "Out") {
+      localStorage.setItem("latestAttendanceId", apiResponse.id);
       router.push("/resident/signin");
     } else {
       router.push("/resident/signout");
@@ -39,12 +26,15 @@ export default function Homepage() {
   useEffect(() => {
     const id = localStorage.getItem("id");
     const fetchData = async () => {
-      const response = await api.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/attendance/${id}`,
-      );
-
-      const data = await response.data;
-      setApiResponse(data.attendances[0]);
+      await api
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/attendance/${id}`)
+        .then((r) =>
+          setApiResponse(
+            r.data.attendances.sort(
+              (a: { id: number }, b: { id: number }) => b.id - a.id,
+            )[0],
+          ),
+        );
     };
     fetchData();
   }, []);

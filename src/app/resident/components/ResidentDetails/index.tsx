@@ -6,7 +6,6 @@ import {
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { AttendanceResponse } from "../../../../../api/types";
-import Cookies from "js-cookie";
 
 interface Props {
   residentData: AttendanceResponse | null;
@@ -29,7 +28,7 @@ export default function ResidentDetails({ residentData }: Props) {
     return () => clearInterval(intervalId);
   }, []);
 
-  const name = Cookies.get("name");
+  const name = localStorage.getItem("name");
   return (
     <Wrapper>
       <Date>{timeNow}</Date>

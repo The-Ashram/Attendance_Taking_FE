@@ -5,7 +5,6 @@ import ResidentsTable from "../components/ResidentsTable";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Date } from "./styled";
-import Cookies from "js-cookie";
 import { DayAttendanceResponse, UserResponse } from "../../../../api/types";
 import api from "../../../../api/axios";
 

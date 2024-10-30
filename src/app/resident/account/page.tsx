@@ -10,7 +10,6 @@ import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
 import { ResidentPatchPayload } from "../../../../api/types";
 import { useState } from "react";
-import Cookies from "js-cookie";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 
 export default function Account() {
@@ -22,8 +21,8 @@ export default function Account() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [changed, setChanged] = useState(false);
-  const aT = Cookies.get("aT");
-  const id = Cookies.get("id");
+  const aT = localStorage.getItem("aT");
+  const id = localStorage.getItem("id");
 
   function SubmitHandler(data: ResidentPatchPayload) {
     data.id = id;
@@ -62,9 +61,7 @@ export default function Account() {
               rules={{ required: "Please fill this in" }}
             />
           </InputDetails>
-          {errorMessage && (
-            <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-          )}
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           {changed && <ErrorMessage>Password Changed</ErrorMessage>}
           <SubmitButton>Submit</SubmitButton>
         </Form>

@@ -8,7 +8,9 @@ interface Props {
 }
 
 export default function Row({ attendanceData, userData, adminData }: Props) {
-  const aData = attendanceData?.filter((ad) => ad.userId === userData?.id);
+  const aData = attendanceData
+    ?.filter((ad) => ad.userId === userData?.id)
+    .sort((a, b) => b.id - a.id);
   const isVerified = adminData?.filter(
     (ad) => ad.employeeID === aData?.[0]?.verifiedBy,
   );
@@ -17,7 +19,7 @@ export default function Row({ attendanceData, userData, adminData }: Props) {
       <td>{userData?.name}</td>
       <td>{userData?.phaseNumber}</td>
       <td>{aData?.[0]?.status === "In" && <GoDotFill />}</td>
-      <td>{aData?.[0]?.status === "out" && <GoDotFill />}</td>
+      <td>{aData?.[0]?.status === "Out" && <GoDotFill />}</td>
       <td>
         {aData?.length !== 0 ? (isVerified?.[0]?.name ?? "Unauthorized") : ""}
       </td>

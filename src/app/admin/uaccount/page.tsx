@@ -1,7 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { UserPatchPayload } from "../../../../api/types";
-import Cookies from "js-cookie";
+import { UserPatchPayload, UserResponse } from "../../../../api/types";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import {
   Form,
@@ -10,8 +9,12 @@ import {
   SubmitButton,
 } from "@/app/components/FormComponents/styled";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/app/admin/components/Header";
+import api from "../../../../api/axios";
+import { Wrapper } from "@/app/admin/account/styled";
+import { Table } from "@/app/admin/components/Table/styled";
+import Row from "@/app/admin/account/Row";
 
 export default function Account() {
   const {
@@ -22,32 +25,30 @@ export default function Account() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [changed, setChanged] = useState(false);
-  const aT = Cookies.get("aT");
-  const id = Cookies.get("id");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [apiResponse, setApiResponse] = useState<UserResponse | null>(null);
+  const id = localStorage.getItem("id");
 
   function SubmitHandler(data: UserPatchPayload) {
     data.id = id;
     const updateUser = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${aT}`,
-          },
-          body: JSON.stringify(data),
-        },
-      );
-      if (!response.ok) {
-        const errorData = await response.text();
-        setErrorMessage(errorData);
-      } else {
-        setChanged(true);
-      }
+      await api
+        .patch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, data)
+        .then(() => setChanged(true))
+        .catch((r) => setErrorMessage(r.response.data));
     };
     updateUser();
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await api
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/user`)
+        .then((r) => setApiResponse(r.data))
+        .catch((r) => setErrorMsg(r.response.data));
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -56,19 +57,41 @@ export default function Account() {
         <Form onSubmit={handleSubmit(SubmitHandler)}>
           <InputDetails>
             <PasswordInput
-              label="Change Password"
+              label="Change My Password"
               name="password"
               register={register}
               rules={{ required: "Please fill this in" }}
             />
           </InputDetails>
-          {errorMessage && (
-            <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-          )}
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           {changed && <ErrorMessage>Password Changed</ErrorMessage>}
           <SubmitButton>Submit</SubmitButton>
         </Form>
       </FormWrapper>
+      <Wrapper>
+        <Table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {apiResponse?.users
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((row) => (
+                <tr>
+                  <td>{row.name}</td>
+                  <td>{row.email}</td>
+                  <td>{row.phoneNumber}</td>
+                  <td>{row.role}</td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      </Wrapper>
     </>
   );
 }
