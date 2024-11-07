@@ -1,3 +1,4 @@
+"use client";
 import {
   Form,
   FormWrapper,
@@ -10,8 +11,8 @@ import { useForm } from "react-hook-form";
 import { CreateUPayload } from "../../../../../api/types";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { Dispatch, SetStateAction, useState } from "react";
-import { router } from "next/client";
 import api from "../../../../../api/axios";
+import { useRouter } from "next/navigation";
 
 interface CreateProps {
   visible: boolean;
@@ -30,6 +31,7 @@ export default function CreateUModalContents({
     formState: { errors, isSubmitting },
   } = useForm<CreateUPayload>();
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
   const onSubmit = async (data: CreateUPayload) => {
     setErrorMessage("");
     data.role = "user";
@@ -38,7 +40,7 @@ export default function CreateUModalContents({
       .then(() => {
         closeModal();
         setRefresh((s) => !s);
-        router.reload();
+        router.refresh();
       })
       .catch((r) =>
         setErrorMessage(r.response.data + " Please check your submission"),

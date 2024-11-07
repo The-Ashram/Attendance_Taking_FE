@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form";
 import { CreateRPayload } from "../../../../../api/types";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { Dispatch, SetStateAction, useState } from "react";
-import { router } from "next/client";
 import api from "../../../../../api/axios";
+import { useRouter } from "next/navigation";
 
 interface CreateProps {
   visible: boolean;
@@ -30,6 +30,7 @@ export default function CreateRModalContents({
     formState: { errors, isSubmitting },
   } = useForm<CreateRPayload>();
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const onSubmit = async (data: CreateRPayload) => {
     setErrorMessage("");
@@ -39,7 +40,7 @@ export default function CreateRModalContents({
       .then(() => {
         closeModal();
         setRefresh((s) => !s);
-        router.reload();
+        router.refresh();
       })
       .catch((r) =>
         setErrorMessage(r.response.data + " Please check your submission"),

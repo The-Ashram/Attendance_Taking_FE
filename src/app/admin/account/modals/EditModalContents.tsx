@@ -8,10 +8,10 @@ import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
 import { AdminUserPatchPayload } from "../../../../../api/types";
-import { router } from "next/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import api from "../../../../../api/axios";
+import { useRouter } from "next/navigation";
 
 interface EditProps {
   visible: boolean;
@@ -33,6 +33,7 @@ export default function EditModalContents({
   } = useForm<AdminUserPatchPayload>();
 
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const SubmitHandler = async (values: AdminUserPatchPayload) => {
     setErrorMessage("");
@@ -44,7 +45,7 @@ export default function EditModalContents({
       .then(() => {
         onClose();
         setRefresh((s) => !s);
-        router.reload();
+        router.refresh();
       })
       .catch((r) => setErrorMessage(r.response.data));
   };
