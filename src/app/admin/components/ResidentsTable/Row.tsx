@@ -10,7 +10,7 @@ interface Props {
 export default function Row({ attendanceData, userData, adminData }: Props) {
   const aData = attendanceData
     ?.filter((ad) => ad.userId === userData?.id)
-    .sort((a, b) => b.id - a.id);
+    ?.sort((a, b) => Number(b.id) - Number(a.id));
   const isVerified = adminData?.filter(
     (ad) => ad.employeeID === aData?.[0]?.verifiedBy,
   );

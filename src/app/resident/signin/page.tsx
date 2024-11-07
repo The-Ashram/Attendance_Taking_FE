@@ -80,7 +80,7 @@ export default function Signin() {
           <InputDetails>
             <PasswordInput
               label="Verified By:"
-              name="verifiedBy"
+              name="checkInVerifiedBy"
               register={register}
               rules={{ required: "Please ask Duty Officer to enter!" }}
             />

@@ -58,7 +58,7 @@ export interface SignInPayload {
   userId: string | null;
   attendanceDate: String;
   checkInTime: Dayjs;
-  verifiedBy: number;
+  checkInVerifiedBy: number;
   status: string;
   id: string | null;
 }
@@ -67,7 +67,7 @@ export interface SignOutPayload {
   userId: string | null;
   attendanceDate: string;
   checkOutTime: string;
-  verifiedBy: number;
+  checkOutVerifiedBy: number;
   returnBy: string;
   reason: string;
   status: "Out";
