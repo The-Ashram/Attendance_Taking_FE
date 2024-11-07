@@ -7,8 +7,20 @@ import dayjs from "dayjs";
 import { Date } from "./styled";
 import { DayAttendanceResponse, UserResponse } from "../../../../api/types";
 import api from "../../../../api/axios";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAuthenticated =
+      window.localStorage.getItem("role") === "admin" ||
+      window.localStorage.getItem("role") === "user";
+    if (!isAuthenticated) {
+      router.push("/");
+    }
+  }, []);
+
   const [timeNow, setTime] = useState(
     dayjs().format("ddd DD-MM-YYYY hh:mm A").toString(),
   );
@@ -30,6 +42,7 @@ export default function HomePage() {
     [],
   );
   const [userData, setUserData] = useState<UserResponse | null>(null);
+
   useEffect(() => {
     const getAttendanceForTheDay = async () => {
       const response = await api.get(

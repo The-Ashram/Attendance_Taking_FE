@@ -14,6 +14,7 @@ import Header from "@/app/admin/components/Header";
 import api from "../../../../api/axios";
 import { Wrapper } from "@/app/admin/account/styled";
 import { Table } from "@/app/admin/components/Table/styled";
+import { useRouter } from "next/navigation";
 
 export default function Account() {
   const {
@@ -27,6 +28,14 @@ export default function Account() {
   const [errorMsg, setErrorMsg] = useState("");
   const [apiResponse, setApiResponse] = useState<UserResponse | null>(null);
   const id = window.localStorage.getItem("id");
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAuthenticated = window.localStorage.getItem("role") === "user";
+    if (!isAuthenticated) {
+      router.push("/");
+    }
+  }, []);
 
   function SubmitHandler(data: UserPatchPayload) {
     data.id = id;

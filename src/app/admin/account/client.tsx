@@ -12,6 +12,7 @@ import { UserResponse } from "../../../../api/types";
 import CreateUModalContents from "@/app/admin/account/modals/CreateUModalContents";
 import api from "../../../../api/axios";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
+import { useRouter } from "next/navigation";
 
 const customStyles = {
   content: {
@@ -34,12 +35,20 @@ export default function Account() {
   const [errorMsg, setErrorMsg] = useState("");
   const [apiResponse, setApiResponse] = useState<UserResponse | null>(null); // Changed undefined to null for better control flow
   const isAuthenticated = window.localStorage.getItem("role") === "admin";
+  const router = useRouter();
 
   const modalHandler = () => {
     setCreateAVisible(false);
     setCreateRVisible(false);
     setCreateUVisible(false);
   };
+
+  useEffect(() => {
+    const isAuthenticated = window.localStorage.getItem("role") === "admin";
+    if (!isAuthenticated) {
+      router.push("/");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
