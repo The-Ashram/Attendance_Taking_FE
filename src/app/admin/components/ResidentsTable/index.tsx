@@ -1,14 +1,7 @@
 import { Table } from "@/app/admin/components/Table/styled";
 import { Container } from "@/app/admin/components/ResidentsTable/styled";
 import Row from "@/app/admin/components/ResidentsTable/Row";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import Cookies from "js-cookie";
-import {
-  AttendanceResponse,
-  DayAttendanceResponse,
-  UserResponse,
-} from "../../../../../api/types";
+import { DayAttendanceResponse, UserResponse } from "../../../../../api/types";
 
 interface Props {
   attendanceData: DayAttendanceResponse[];
@@ -16,8 +9,10 @@ interface Props {
 }
 
 export default function ResidentsTable({ attendanceData, userData }: Props) {
-  const residents = userData?.users.filter((u) => u.role === "resident");
-  const others = userData?.users.filter(
+  const residents = userData?.users
+    ?.filter((u) => u.role === "resident")
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const others = userData?.users?.filter(
     (u) => u.role === "admin" || u.role === "user",
   );
   return (
@@ -35,14 +30,16 @@ export default function ResidentsTable({ attendanceData, userData }: Props) {
           </tr>
         </thead>
         <tbody>
-          {residents?.map((u, index) => (
-            <Row
-              attendanceData={attendanceData}
-              userData={u}
-              key={index}
-              adminData={others}
-            />
-          ))}
+          {residents
+            ?.sort((a, b) => a.name.localeCompare(b.name))
+            .map((u, index) => (
+              <Row
+                attendanceData={attendanceData}
+                userData={u}
+                key={index}
+                adminData={others}
+              />
+            ))}
         </tbody>
       </Table>
     </Container>

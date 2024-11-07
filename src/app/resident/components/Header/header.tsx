@@ -1,3 +1,4 @@
+"use client";
 import {
   Button,
   Title,
@@ -20,6 +21,7 @@ export default function Header() {
   }
 
   function logoutHandler() {
+    window.localStorage.clear();
     router.push("/");
   }
 

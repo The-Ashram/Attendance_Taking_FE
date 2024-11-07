@@ -5,6 +5,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { Control, Controller } from "react-hook-form";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 interface Props {
   name: string; // Add name property
@@ -13,6 +15,11 @@ interface Props {
   disabled: boolean;
   label: string;
 }
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.tz.setDefault("Asia/Singapore");
 
 export default function BasicTimePicker({
   name,
@@ -29,11 +36,16 @@ export default function BasicTimePicker({
           <Controller
             name={name}
             control={control}
-            defaultValue={defaultValue ? dayjs(defaultValue) : null}
+            defaultValue={
+              defaultValue ? dayjs.tz(defaultValue, "Asia/Singapore") : null
+            }
             render={({ field: { onChange, value } }) => (
               <DesktopTimePicker
-                value={value}
-                onChange={(newValue) => onChange(newValue)}
+                value={value ? dayjs.tz(value) : null}
+                onChange={(newValue) => {
+                  console.log(newValue);
+                  onChange(dayjs.tz(newValue, "Asia/Singapore"));
+                }}
                 disabled={disabled}
               />
             )}

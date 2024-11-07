@@ -8,10 +8,10 @@ import InputBox from "@/app/components/FormComponents/InputBox";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
 import { CreateRPayload } from "../../../../../api/types";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { Dispatch, SetStateAction, useState } from "react";
-import Cookies from "js-cookie";
-import { router } from "next/client";
+import api from "../../../../../api/axios";
+import { useRouter } from "next/navigation";
 
 interface CreateProps {
   visible: boolean;
@@ -30,31 +30,21 @@ export default function CreateRModalContents({
     formState: { errors, isSubmitting },
   } = useForm<CreateRPayload>();
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const onSubmit = async (data: CreateRPayload) => {
     setErrorMessage("");
     data.role = "resident";
-    const token = Cookies.get("aT");
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      },
-    );
-
-    if (!response.ok) {
-      const errorData = await response.text();
-      setErrorMessage(errorData.slice(1, -2));
-    } else {
-      closeModal();
-      setRefresh((s) => !s);
-      router.reload();
-    }
+    await api
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, data)
+      .then(() => {
+        closeModal();
+        setRefresh((s) => !s);
+        router.refresh();
+      })
+      .catch((r) =>
+        setErrorMessage(r.response.data + " Please check your submission"),
+      );
   };
 
   return (
@@ -96,11 +86,11 @@ export default function CreateRModalContents({
                   },
                   minLength: {
                     value: 8,
-                    message: "Phone number must be 9 digits",
+                    message: "Phone number must be 8 digits",
                   },
                   maxLength: {
                     value: 8,
-                    message: "Phone number must be 9 digits",
+                    message: "Phone number must be 8 digits",
                   },
                 }}
               />
@@ -129,9 +119,7 @@ export default function CreateRModalContents({
             </InputDetails>
             <SubmitButton>Submit</SubmitButton>
           </Form>
-          {errorMessage && (
-            <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-          )}
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </FormWrapper>
       )}
     </>

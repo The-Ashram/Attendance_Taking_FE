@@ -4,12 +4,12 @@ import {
   InputBox,
   InputWrapper,
   Wrapper,
-} from "@/app/admin/components/LoginModal/styled";
+} from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { LoginPayload, LoginResponse } from "../../../../../api/types";
+import { LoginPayload, LoginResponse } from "../../../../api/types";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import api from "../../../../api/axios";
 
 export default function LoginModal() {
   const router = useRouter();
@@ -26,63 +26,20 @@ export default function LoginModal() {
 
   const onLogin = async (data: LoginPayload) => {
     setLoginError(false); // Reset the login error state before making the request
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        },
-      );
-
-      if (!response.ok) {
-        const errorData = await response.text();
+    await api
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
+      .then((r) => {
+        setApiResponse(r.data); // Store access and refresh tokens in localstorage
+        window.localStorage.setItem("accessToken", r.data.accessToken);
+        window.localStorage.setItem("refreshToken", r.data.refreshToken);
+        window.localStorage.setItem("role", r.data.user.role);
+        window.localStorage.setItem("id", r.data.user.id);
+        window.localStorage.setItem("name", r.data.user.name);
+      })
+      .catch((r) => {
         setLoginError(true);
-        setErrorMessage(errorData);
-      } else {
-        const responseData = await response.json();
-        setApiResponse(responseData);
-
-        // Store access and refresh tokens in cookies
-        Cookies.set("aT", responseData.accessToken, {
-          expires: 1, // 1 day expiration
-          secure: true, // Ensures the cookie is sent only over HTTPS
-          sameSite: "Strict", // Prevents CSRF attacks
-        });
-
-        Cookies.set("rT", responseData.refreshToken, {
-          expires: 7, // 7 days expiration
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("role", responseData.user.role, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("id", responseData.user.id, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-        Cookies.set("name", responseData.user.name, {
-          expires: 1,
-          secure: true,
-          sameSite: "Strict",
-        });
-      }
-    } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error,
-      );
-      setLoginError(true);
-      setErrorMessage("An unexpected error occurred. Please try again.");
-    }
+        setErrorMessage(r.response.data);
+      });
   };
 
   // Effect to handle redirection once the apiresponse is received
@@ -120,9 +77,7 @@ export default function LoginModal() {
           />
           <ErrorMessage>{errors.password?.message as string}</ErrorMessage>
         </InputWrapper>
-        {isLoginError && (
-          <ErrorMessage>{errorMessage.slice(1, -1)}</ErrorMessage>
-        )}
+        {isLoginError && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <InputWrapper>
           <CTAButton type="submit">Submit</CTAButton>
         </InputWrapper>

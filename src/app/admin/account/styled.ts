@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100vw; // Full viewport width
-  height: 50vh; // Full viewport height
-  margin: 0; // Remove default margin
+  margin-top: 5vh; // Remove default margin
   padding: 0; // Remove default padding
   display: flex;
   justify-content: center;

@@ -3,9 +3,9 @@ import {
   FormWrapper,
   SubmitButton,
 } from "@/app/components/FormComponents/styled";
-import Cookies from "js-cookie";
 import { Dispatch, SetStateAction, useState } from "react";
-import { ErrorMessage } from "@/app/admin/components/LoginModal/styled";
+import { ErrorMessage } from "@/app/components/LoginModal/styled";
+import api from "../../../../../api/axios";
 import { useRouter } from "next/navigation";
 
 interface DeleteProps {
@@ -21,28 +21,17 @@ export default function DeleteModalContents({
   id,
   setRefresh,
 }: DeleteProps) {
-  const aT = Cookies.get("aT");
   const [errorMsg, setErrorMessage] = useState("");
   const router = useRouter();
   const onDelete = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${aT}`,
-        },
-      },
-    );
-    if (!response.ok) {
-      const errorData = await response.text();
-      setErrorMessage(errorData.slice(1, -2));
-    } else {
-      onClose();
-      setRefresh((s) => !s);
-      router.push("/admin/account");
-    }
+    await api
+      .delete(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`)
+      .then(() => {
+        onClose();
+        setRefresh((s) => !s);
+        router.refresh();
+      })
+      .catch((r) => setErrorMessage(r.response.data));
   };
   return (
     <>

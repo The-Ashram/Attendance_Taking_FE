@@ -1,3 +1,4 @@
+"use client";
 import {
   Button,
   ButtonsWrapper,
@@ -7,7 +8,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "react-modal";
 import ReportModal from "@/app/admin/components/Header/ReportModal";
-import Cookies from "js-cookie";
 
 const ReportStyles = {
   content: {
@@ -30,15 +30,12 @@ export default function Header() {
 
   const LogoutHandler = () => {
     //logout stuff
-    Cookies.remove("aT", { path: "/" });
-    Cookies.remove("rT", { path: "/" });
-    Cookies.remove("role", { path: "/" });
-    Cookies.remove("id", { path: "/" });
+    window.localStorage.clear();
     router.push("/");
   };
 
   const AccountHandler = () => {
-    const role = Cookies.get("role");
+    const role = window.localStorage.getItem("role");
     if (role === "admin") {
       router.push("/admin/account");
     } else {

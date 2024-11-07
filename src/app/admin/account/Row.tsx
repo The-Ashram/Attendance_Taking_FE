@@ -4,9 +4,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import EditModalContents from "@/app/admin/account/modals/EditModalContents";
 import Modal from "react-modal";
 import DeleteModalContents from "./modals/DeleteModalContents";
+import { User } from "../../../../api/types";
 
 interface Props {
-  row: any;
+  row: User;
   setRefresh: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -80,6 +81,7 @@ export default function Row({ row, setRefresh }: Props) {
       <tr>
         <td>{row.name}</td>
         <td>{row.email}</td>
+        <td>{row.phoneNumber}</td>
         <td>{row.role}</td>
         <td>
           <CiEdit

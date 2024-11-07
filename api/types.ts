@@ -55,20 +55,22 @@ export interface CreateUPayload {
 }
 
 export interface SignInPayload {
-  userId: string;
-  attendanceDate: Dayjs;
+  userId: string | null;
+  attendanceDate: String;
   checkInTime: Dayjs;
-  verifiedBy: number;
+  checkInVerifiedBy: number;
   status: string;
+  id: string | null;
 }
 
 export interface SignOutPayload {
-  userId: string | undefined;
-  attendanceDate: Dayjs;
-  checkOutTime: Dayjs;
-  verifiedBy: number;
-  returnBy: Dayjs;
+  userId: string | null;
+  attendanceDate: string;
+  checkOutTime: string;
+  checkOutVerifiedBy: number;
+  returnBy: string;
   reason: string;
+  status: "Out";
   remarks: string;
 }
 
@@ -76,26 +78,27 @@ export interface AttendanceResponse {
   status: string;
   reason: string;
   returnBy: string;
+  id: string;
 }
 
 export interface ResidentPatchPayload {
-  id?: string;
+  id?: string | null;
   password: string;
 }
 
 export interface UserPatchPayload {
-  id?: string;
+  id?: string | null;
   password: string;
 }
 
 export interface AdminUserPatchPayload {
-  id?: string;
   name?: string;
   password?: string;
   phaseNumber?: string;
   phoneNumber?: string;
   email?: string;
   employeeId?: string;
+  role?: string;
 }
 
 export interface DayAttendanceResponse {
@@ -106,4 +109,5 @@ export interface DayAttendanceResponse {
   verifiedBy?: string;
   status?: string;
   userId?: string;
+  id?: string;
 }
