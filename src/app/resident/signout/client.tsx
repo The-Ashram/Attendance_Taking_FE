@@ -16,7 +16,7 @@ import DropdownBox from "@/app/components/FormComponents/Dropdown";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { SignOutPayload } from "../../../../api/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import api from "../../../../api/axios";
 import utc from "dayjs/plugin/utc";
@@ -47,6 +47,13 @@ export default function SignOut() {
     },
   });
   const router = useRouter();
+
+  useEffect(() => {
+    const isAuthenticated = window.localStorage.getItem("role") === "resident";
+    if (!isAuthenticated) {
+      router.push("/");
+    }
+  }, []);
   const [errorMessage, setErrorMessage] = useState("");
   const timeNow = dayjs.tz();
   const formTime = timeNow.format("YYYY-MM-DDTHH:mm");
@@ -58,7 +65,6 @@ export default function SignOut() {
     data.userId = userId;
     data.attendanceDate = dayjs().format("YYYY-MM-DD");
     data.status = "Out";
-    data.returnBy = "";
     const filteredData = Object.fromEntries(
       Object.entries(data).filter(([_, value]) => value !== ""),
     );

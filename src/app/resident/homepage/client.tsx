@@ -14,6 +14,13 @@ export default function Homepage() {
     null,
   );
 
+  useEffect(() => {
+    const isAuthenticated = window.localStorage.getItem("role") === "resident";
+    if (!isAuthenticated) {
+      router.push("/");
+    }
+  }, []);
+
   function requestHandler() {
     if (apiResponse?.status === "Out") {
       window.localStorage.setItem("latestAttendanceId", apiResponse.id);

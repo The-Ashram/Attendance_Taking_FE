@@ -9,8 +9,9 @@ import { SubmitButton } from "@/app/components/FormComponents/styled";
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useForm } from "react-hook-form";
 import { ResidentPatchPayload } from "../../../../api/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
+import { useRouter } from "next/navigation";
 
 export default function Account() {
   const {
@@ -18,10 +19,19 @@ export default function Account() {
     handleSubmit,
     formState: { errors },
   } = useForm<ResidentPatchPayload>();
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAuthenticated = window.localStorage.getItem("role") === "resident";
+    if (!isAuthenticated) {
+      router.push("/");
+    }
+  }, []);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [changed, setChanged] = useState(false);
   const aT = window.localStorage.getItem("aT");
+
   const id = window.localStorage.getItem("id");
 
   function SubmitHandler(data: ResidentPatchPayload) {
