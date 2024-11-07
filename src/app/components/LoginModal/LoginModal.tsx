@@ -30,11 +30,11 @@ export default function LoginModal() {
       .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
       .then((r) => {
         setApiResponse(r.data); // Store access and refresh tokens in localstorage
-        localStorage.setItem("accessToken", r.data.accessToken);
-        localStorage.setItem("refreshToken", r.data.refreshToken);
-        localStorage.setItem("role", r.data.user.role);
-        localStorage.setItem("id", r.data.user.id);
-        localStorage.setItem("name", r.data.user.name);
+        window.localStorage.setItem("accessToken", r.data.accessToken);
+        window.localStorage.setItem("refreshToken", r.data.refreshToken);
+        window.localStorage.setItem("role", r.data.user.role);
+        window.localStorage.setItem("id", r.data.user.id);
+        window.localStorage.setItem("name", r.data.user.name);
       })
       .catch((r) => {
         setLoginError(true);

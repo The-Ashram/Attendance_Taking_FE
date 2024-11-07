@@ -29,11 +29,11 @@ export default function Signin() {
   } = useForm<SignInPayload>();
 
   const [errorMessage, setErrorMessage] = useState("");
-  const name = localStorage.getItem("name");
+  const name = window.localStorage.getItem("name");
   const SubmitHandler = (data: SignInPayload) => {
-    data.id = localStorage.getItem("latestAttendanceId");
+    data.id = window.localStorage.getItem("latestAttendanceId");
     data.status = "In";
-    data.userId = localStorage.getItem("id");
+    data.userId = window.localStorage.getItem("id");
     data.attendanceDate = dayjs().format("YYYY-MM-DD");
     const updateAttendance = async () => {
       const response = await api.patch(

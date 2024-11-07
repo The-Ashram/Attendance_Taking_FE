@@ -29,12 +29,12 @@ export default function Header() {
 
   const LogoutHandler = () => {
     //logout stuff
-    localStorage.clear();
+    window.localStorage.clear();
     router.push("/");
   };
 
   const AccountHandler = () => {
-    const role = localStorage.getItem("role");
+    const role = window.localStorage.getItem("role");
     if (role === "admin") {
       router.push("/admin/account");
     } else {

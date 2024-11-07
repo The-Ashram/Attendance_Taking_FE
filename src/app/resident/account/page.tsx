@@ -21,8 +21,8 @@ export default function Account() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [changed, setChanged] = useState(false);
-  const aT = localStorage.getItem("aT");
-  const id = localStorage.getItem("id");
+  const aT = window.localStorage.getItem("aT");
+  const id = window.localStorage.getItem("id");
 
   function SubmitHandler(data: ResidentPatchPayload) {
     data.id = id;

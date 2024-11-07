@@ -16,7 +16,7 @@ export default function Homepage() {
 
   function requestHandler() {
     if (apiResponse?.status === "Out") {
-      localStorage.setItem("latestAttendanceId", apiResponse.id);
+      window.localStorage.setItem("latestAttendanceId", apiResponse.id);
       router.push("/resident/signin");
     } else {
       router.push("/resident/signout");
@@ -24,7 +24,7 @@ export default function Homepage() {
   }
 
   useEffect(() => {
-    const id = localStorage.getItem("id");
+    const id = window.localStorage.getItem("id");
     const fetchData = async () => {
       await api
         .get(`${process.env.NEXT_PUBLIC_API_URL}/attendance/${id}`)

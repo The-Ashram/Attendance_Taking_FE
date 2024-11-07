@@ -33,7 +33,7 @@ export default function Account() {
   const [refresh, setRefresh] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [apiResponse, setApiResponse] = useState<UserResponse | null>(null); // Changed undefined to null for better control flow
-  const isAuthenticated = localStorage.getItem("role") === "admin";
+  const isAuthenticated = window.localStorage.getItem("role") === "admin";
 
   const modalHandler = () => {
     setCreateAVisible(false);

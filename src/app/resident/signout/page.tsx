@@ -50,9 +50,9 @@ export default function Requestform() {
   const [errorMessage, setErrorMessage] = useState("");
   const timeNow = dayjs.tz();
   const formTime = timeNow.format("YYYY-MM-DDTHH:mm");
-  const name = localStorage.getItem("name");
+  const name = window.localStorage.getItem("name");
   const methods = useForm<SignOutPayload>();
-  const userId = localStorage.getItem("id");
+  const userId = window.localStorage.getItem("id");
 
   function SubmitHandler(data: SignOutPayload) {
     data.userId = userId;

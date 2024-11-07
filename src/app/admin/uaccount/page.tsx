@@ -14,7 +14,6 @@ import Header from "@/app/admin/components/Header";
 import api from "../../../../api/axios";
 import { Wrapper } from "@/app/admin/account/styled";
 import { Table } from "@/app/admin/components/Table/styled";
-import Row from "@/app/admin/account/Row";
 
 export default function Account() {
   const {
@@ -27,7 +26,7 @@ export default function Account() {
   const [changed, setChanged] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [apiResponse, setApiResponse] = useState<UserResponse | null>(null);
-  const id = localStorage.getItem("id");
+  const id = window.localStorage.getItem("id");
 
   function SubmitHandler(data: UserPatchPayload) {
     data.id = id;

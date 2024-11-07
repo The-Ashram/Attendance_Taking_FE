@@ -28,7 +28,7 @@ export default function ResidentDetails({ residentData }: Props) {
     return () => clearInterval(intervalId);
   }, []);
 
-  const name = localStorage.getItem("name");
+  const name = window.localStorage.getItem("name");
   return (
     <Wrapper>
       <Date>{timeNow}</Date>

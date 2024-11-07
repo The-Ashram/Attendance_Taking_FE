@@ -8,7 +8,7 @@ const api = axios.create({
 // Add a request interceptor
 api.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = window.localStorage.getItem("accessToken");
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
@@ -31,7 +31,7 @@ export const setupInterceptors = (
       if (error.response?.status === 403) {
         navigate("/", { replace: true });
         logout();
-        localStorage.clear();
+        window.localStorage.clear();
         sessionStorage.clear();
         return Promise.reject(error);
       }
@@ -40,10 +40,10 @@ export const setupInterceptors = (
       if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         try {
-          const refreshToken = localStorage.getItem("refreshToken");
+          const refreshToken = window.localStorage.getItem("refreshToken");
           if (!refreshToken) {
             navigate("/", { replace: true });
-            localStorage.clear();
+            window.localStorage.clear();
             return Promise.reject(error);
           }
 
@@ -53,7 +53,7 @@ export const setupInterceptors = (
           const { accessSigningPayload } = response.data;
 
           // Store the new access token
-          localStorage.setItem("accessToken", accessSigningPayload);
+          window.localStorage.setItem("accessToken", accessSigningPayload);
 
           // Retry the original request with the new access token
           originalRequest.headers["Authorization"] =
@@ -61,7 +61,7 @@ export const setupInterceptors = (
           return api(originalRequest);
         } catch (refreshError) {
           navigate("/", { replace: true });
-          localStorage.clear();
+          window.localStorage.clear();
           return Promise.reject(refreshError);
         }
       }
