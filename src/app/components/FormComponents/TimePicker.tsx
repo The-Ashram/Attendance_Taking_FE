@@ -37,14 +37,21 @@ export default function BasicTimePicker({
             name={name}
             control={control}
             defaultValue={
-              defaultValue ? dayjs.tz(defaultValue, "Asia/Singapore") : null
+              defaultValue
+                ? dayjs
+                    .tz(defaultValue, "Asia/Singapore")
+                    .format("YYYY-MM-DDTHH:mm")
+                : null
             }
             render={({ field: { onChange, value } }) => (
               <DesktopTimePicker
                 value={value ? dayjs.tz(value) : null}
                 onChange={(newValue) => {
-                  console.log(newValue);
-                  onChange(dayjs.tz(newValue, "Asia/Singapore"));
+                  onChange(
+                    dayjs
+                      .tz(newValue, "Asia/Singapore")
+                      .format("YYYY-MM-DDTHH:mm"),
+                  );
                 }}
                 disabled={disabled}
               />

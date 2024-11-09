@@ -16,9 +16,16 @@ import { useEffect, useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import api from "../../../../api/axios";
 import { useRouter } from "next/navigation";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+dayjs.tz.setDefault("Asia/Singapore");
 
 export default function Signin() {
-  const timeNow = dayjs();
+  const timeNow = dayjs.tz();
   const formTime = timeNow.format("YYYY-MM-DDTHH:mm");
   const router = useRouter();
 

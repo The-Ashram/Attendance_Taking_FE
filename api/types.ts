@@ -56,8 +56,8 @@ export interface CreateUPayload {
 
 export interface SignInPayload {
   userId: string | null;
-  attendanceDate: String;
-  checkInTime: Dayjs;
+  attendanceDate: string;
+  checkInTime: string;
   checkInVerifiedBy: number;
   status: string;
   id: string | null;

@@ -21,16 +21,13 @@ export default function ReportModal({ visible, onClose }: Props) {
   });
 
   const handleDateChange = (name: any, value: any) => {
-    console.log(value);
     setFormValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   };
 
-  const submitHandler = () => {
-    console.log("Form submitted with values:", formValues);
-  };
+  const submitHandler = () => {};
 
   return (
     <>
