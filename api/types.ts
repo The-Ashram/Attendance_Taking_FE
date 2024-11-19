@@ -111,3 +111,5 @@ export interface DayAttendanceResponse {
   userId?: string;
   id?: string;
 }
+
+export interface AttendanceReportPayload {}

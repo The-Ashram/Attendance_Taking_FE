@@ -5,8 +5,10 @@ import {
   SubmitButton,
 } from "@/app/components/FormComponents/styled";
 import BasicDatePicker from "@/app/admin/components/Header/DatePicker";
-import { useForm, useWatch } from "react-hook-form";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import dayjs from "dayjs";
+import api from "../../../../../api/axios";
 
 interface Props {
   visible: boolean;
@@ -14,7 +16,7 @@ interface Props {
 }
 
 export default function ReportModal({ visible, onClose }: Props) {
-  const { register, handleSubmit, setValue } = useForm();
+  const { control, handleSubmit, setValue } = useForm();
   const [formValues, setFormValues] = useState({
     from: null,
     to: null,
@@ -27,13 +29,59 @@ export default function ReportModal({ visible, onClose }: Props) {
     }));
   };
 
-  const submitHandler = () => {};
+  const SubmitHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updateAttendance = async () => {
+      const response = await api.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/attendance/export?date=${formValues.from}`,
+        { responseType: "blob" },
+      );
+
+      const filename = "attendance_report_" + formValues.from + ".csv";
+
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute("download", filename); // Use extracted filename
+      document.body.appendChild(link);
+      link.click();
+
+      link.parentNode?.removeChild(link);
+    };
+    const updateAttendance2 = async () => {
+      const response = await api.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/attendance/export?from=${formValues.from}&to=${formValues.to}`,
+        { responseType: "blob" },
+      );
+      const contentDisposition = response.headers["content-disposition"];
+      const filename =
+        "attendance_report_" +
+        formValues.from +
+        "_to_" +
+        formValues.to +
+        ".csv";
+
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute("download", filename); // Use extracted filename
+      document.body.appendChild(link);
+      link.click();
+
+      link.parentNode?.removeChild(link);
+    };
+    if (formValues.from === formValues.to) {
+      updateAttendance();
+    } else {
+      updateAttendance2();
+    }
+  };
 
   return (
     <>
       {visible && (
         <FormWrapper>
-          <Form>
+          <Form onSubmit={SubmitHandler}>
             <h2 style={{ textAlign: "center", marginBottom: "10%" }}>
               Generate Attendance Report
             </h2>
@@ -47,6 +95,7 @@ export default function ReportModal({ visible, onClose }: Props) {
               <BasicDatePicker
                 label="From"
                 name="from"
+                miniDate={dayjs("2024-10-10")}
                 setValue={handleDateChange}
               />
             </div>
@@ -57,15 +106,20 @@ export default function ReportModal({ visible, onClose }: Props) {
                 justifyContent: "center",
               }}
             >
-              <BasicDatePicker
-                label="To"
-                name="to"
-                setValue={handleDateChange}
-              />
+              {!!formValues.from && (
+                <BasicDatePicker
+                  label="To"
+                  name="to"
+                  miniDate={dayjs(formValues.from)}
+                  setValue={handleDateChange}
+                />
+              )}
             </div>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
               <CancelButton onClick={onClose}>Cancel</CancelButton>
-              <SubmitButton onClick={submitHandler}>Generate</SubmitButton>
+              {formValues.from && formValues.to && (
+                <SubmitButton type="submit">Generate</SubmitButton>
+              )}
             </div>
           </Form>
         </FormWrapper>

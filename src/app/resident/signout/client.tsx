@@ -70,10 +70,7 @@ export default function SignOut() {
     );
     const createAttendance = async () => {
       await api
-        .post(
-          `${process.env.NEXT_PUBLIC_API_URL}/attendance/create`,
-          filteredData,
-        )
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/attendance`, filteredData)
         .then(() => router.push("/resident/homepage"))
         .catch((r) => setErrorMessage(r.response.data));
     };
