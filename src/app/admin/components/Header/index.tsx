@@ -8,6 +8,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "react-modal";
 import ReportModal from "@/app/admin/components/Header/ReportModal";
+import api from "../../../../../api/axios";
+import dayjs from "dayjs";
 
 const ReportStyles = {
   content: {
@@ -50,22 +52,43 @@ export default function Header() {
     setVisible(true);
   };
 
-  const modalHandler = () => {
+  const ModalHandler = () => {
     setVisible(false);
+  };
+
+  const UserHandler = () => {
+    const getUsers = async () => {
+      const response = await api.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/export`,
+        { responseType: "blob" },
+      );
+      const filename = "user_report_" + dayjs().format("YYYY-MM-DD") + ".csv";
+
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute("download", filename); // Use extracted filename
+      document.body.appendChild(link);
+      link.click();
+
+      link.parentNode?.removeChild(link);
+    };
+    getUsers();
   };
 
   return (
     <Wrapper>
       <Modal
         isOpen={isVisible}
-        onRequestClose={() => modalHandler()}
+        onRequestClose={() => ModalHandler()}
         style={ReportStyles}
       >
-        <ReportModal visible={isVisible} onClose={modalHandler} />
+        <ReportModal visible={isVisible} onClose={ModalHandler} />
       </Modal>
       <ButtonsWrapper>
         {isHome ? null : <Button onClick={HomeHandler}>Home</Button>}
-        <Button onClick={ReportHandler}>Report</Button>
+        <Button onClick={ReportHandler}>Attendance Report</Button>
+        <Button onClick={UserHandler}>User Report</Button>
         <Button onClick={AccountHandler}>Accounts</Button>
       </ButtonsWrapper>
       <div style={{ width: "300px" }} />

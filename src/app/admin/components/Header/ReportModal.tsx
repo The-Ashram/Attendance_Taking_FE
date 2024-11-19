@@ -31,12 +31,11 @@ export default function ReportModal({ visible, onClose }: Props) {
 
   const SubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateAttendance = async () => {
+    const getAttendance = async () => {
       const response = await api.get(
         `${process.env.NEXT_PUBLIC_API_URL}/attendance/export?date=${formValues.from}`,
         { responseType: "blob" },
       );
-
       const filename = "attendance_report_" + formValues.from + ".csv";
 
       const blob = new Blob([response.data], { type: "text/csv" });
@@ -48,7 +47,7 @@ export default function ReportModal({ visible, onClose }: Props) {
 
       link.parentNode?.removeChild(link);
     };
-    const updateAttendance2 = async () => {
+    const getAttendance2 = async () => {
       const response = await api.get(
         `${process.env.NEXT_PUBLIC_API_URL}/attendance/export?from=${formValues.from}&to=${formValues.to}`,
         { responseType: "blob" },
@@ -71,9 +70,9 @@ export default function ReportModal({ visible, onClose }: Props) {
       link.parentNode?.removeChild(link);
     };
     if (formValues.from === formValues.to) {
-      updateAttendance();
+      getAttendance();
     } else {
-      updateAttendance2();
+      getAttendance2();
     }
   };
 
