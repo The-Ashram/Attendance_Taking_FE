@@ -12,6 +12,7 @@ import { ResidentPatchPayload } from "../../../../api/types";
 import { useEffect, useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
+import api from "../../../../api/axios";
 
 export default function Account() {
   const {
@@ -30,31 +31,17 @@ export default function Account() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [changed, setChanged] = useState(false);
-  const aT = window.localStorage.getItem("aT");
-
   const id = window.localStorage.getItem("id");
 
   function SubmitHandler(data: ResidentPatchPayload) {
     data.id = id;
     const updateUser = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${aT}`,
-          },
-          body: JSON.stringify(data),
-        },
-      );
-      if (!response.ok) {
-        const errorData = await response.text();
-        setErrorMessage(errorData);
-      } else {
-        setChanged(true);
-      }
+      await api
+        .patch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, data)
+        .then(() => setChanged(true))
+        .catch((r) => setErrorMessage(r.response.data));
     };
+
     updateUser();
   }
 
