@@ -35,6 +35,7 @@ export default function LoginModal() {
         window.localStorage.setItem("role", r.data.user.role);
         window.localStorage.setItem("id", r.data.user.id);
         window.localStorage.setItem("name", r.data.user.name);
+        window.localStorage.setItem("email", data.email);
       })
       .catch((r) => {
         setLoginError(true);

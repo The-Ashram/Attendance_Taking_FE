@@ -11,7 +11,7 @@ import {
 import PasswordInput from "@/app/components/FormComponents/PasswordInput";
 import { useEffect, useState } from "react";
 import Header from "@/app/admin/components/Header";
-import api from "../../../../api/axios";
+import api, { refreshTokens } from "../../../../api/axios";
 import { Wrapper } from "@/app/admin/account/styled";
 import { Table } from "@/app/admin/components/Table/styled";
 import { useRouter } from "next/navigation";
@@ -42,7 +42,12 @@ export default function Account() {
     const updateUser = async () => {
       await api
         .patch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, data)
-        .then(() => setChanged(true))
+        .then((d) => {
+          setChanged(true);
+          window.localStorage.setItem("accessToken", d.data.accessToken);
+          window.localStorage.setItem("refreshToken", d.data.refreshToken);
+          refreshTokens();
+        })
         .catch((r) => setErrorMessage(r.response.data));
     };
     updateUser();

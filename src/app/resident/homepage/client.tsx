@@ -41,7 +41,8 @@ export default function Homepage() {
               (a: { id: number }, b: { id: number }) => b.id - a.id,
             )[0],
           ),
-        );
+        )
+        .catch();
     };
     fetchData();
   }, []);

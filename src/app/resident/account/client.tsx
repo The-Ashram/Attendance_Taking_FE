@@ -12,7 +12,7 @@ import { ResidentPatchPayload } from "../../../../api/types";
 import { useEffect, useState } from "react";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
-import api from "../../../../api/axios";
+import api, { refreshTokens } from "../../../../api/axios";
 
 export default function Account() {
   const {
@@ -38,10 +38,14 @@ export default function Account() {
     const updateUser = async () => {
       await api
         .patch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, data)
-        .then(() => setChanged(true))
+        .then((d) => {
+          setChanged(true);
+          window.localStorage.setItem("accessToken", d.data.accessToken);
+          window.localStorage.setItem("refreshToken", d.data.refreshToken);
+          refreshTokens();
+        })
         .catch((r) => setErrorMessage(r.response.data));
     };
-
     updateUser();
   }
 

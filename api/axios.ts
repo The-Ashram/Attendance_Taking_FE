@@ -1,8 +1,9 @@
 import axios from "axios";
 import { NavigateFunction } from "react-router-dom";
+import { ResidentPatchPayload } from "./types";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
 });
 
 // Add a request interceptor
@@ -70,5 +71,10 @@ export const setupInterceptors = (
     },
   );
 };
+
+export async function refreshTokens() {
+  api.defaults.headers.common["Authorization"] =
+    `Bearer ${window.localStorage.getItem("accessToken")}`;
+}
 
 export default api;

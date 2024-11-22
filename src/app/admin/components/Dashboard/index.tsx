@@ -43,6 +43,19 @@ export default function Dashboard({ attendanceData, userData }: Props) {
     setOpenModal((s) => !s);
   };
 
+  const uniqueNames = new Set();
+  const filterUniqueByName = (data: DayAttendanceResponse[]) => {
+    return data.filter((item) => {
+      if (!uniqueNames.has(item.userId)) {
+        uniqueNames.add(item.userId);
+        return true; // Keep the item
+      }
+      return false; // Skip duplicates
+    });
+  };
+
+  filterUniqueByName(numIn);
+
   return (
     <Container>
       <Modal
@@ -60,7 +73,7 @@ export default function Dashboard({ attendanceData, userData }: Props) {
         </StatsBlock>
         <StatsBlock onClick={() => modalHandler(true)}>
           <label style={{ fontSize: "25px" }}>Residents In</label>
-          <label style={{ fontSize: "40px" }}>{numIn?.length ?? 0}</label>
+          <label style={{ fontSize: "40px" }}>{uniqueNames.size ?? 0}</label>
         </StatsBlock>
       </Wrapper>
     </Container>
