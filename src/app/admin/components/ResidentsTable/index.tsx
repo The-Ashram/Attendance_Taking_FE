@@ -4,7 +4,7 @@ import Row from "@/app/admin/components/ResidentsTable/Row";
 import { DayAttendanceResponse, UserResponse } from "../../../../../api/types";
 
 interface Props {
-  attendanceData: DayAttendanceResponse[];
+  attendanceData: Map<String, DayAttendanceResponse>;
   userData: UserResponse | null;
 }
 

@@ -22,7 +22,7 @@ const customStyles = {
 };
 
 interface Props {
-  attendanceData: DayAttendanceResponse[];
+  attendanceData: Map<String, DayAttendanceResponse>;
   userData: UserResponse | null;
 }
 
@@ -30,8 +30,6 @@ export default function Dashboard({ attendanceData, userData }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [inModal, setInModal] = useState(false);
   const [data, setData] = useState<DayAttendanceResponse[]>([]);
-  const numOut = attendanceData?.filter((ad) => ad.status === "Out");
-  const numIn = attendanceData?.filter((ad) => ad.status === "In");
 
   const modalHandler = (inModal: boolean) => {
     setInModal(inModal);
@@ -43,19 +41,14 @@ export default function Dashboard({ attendanceData, userData }: Props) {
     setOpenModal((s) => !s);
   };
 
-  const uniqueNames = new Set();
-  const filterUniqueByName = (data: DayAttendanceResponse[]) => {
-    return data.filter((item) => {
-      if (!uniqueNames.has(item.userId)) {
-        uniqueNames.add(item.userId);
-        return true; // Keep the item
-      }
-      return false; // Skip duplicates
-    });
-  };
+  const numOut = Array.from(attendanceData?.entries() ?? [])
+    ?.filter(([key, value]) => value.status === "Out")
+    .flatMap((s) => s[1]);
+  const numIn = Array.from(attendanceData?.entries() ?? [])
+    ?.filter(([key, value]) => value.status === "In")
+    .flatMap((s) => s[1]);
 
-  filterUniqueByName(numIn);
-
+  const residents = userData?.users.filter((u) => u.role === "resident");
   return (
     <Container>
       <Modal
@@ -73,7 +66,9 @@ export default function Dashboard({ attendanceData, userData }: Props) {
         </StatsBlock>
         <StatsBlock onClick={() => modalHandler(true)}>
           <label style={{ fontSize: "25px" }}>Residents In</label>
-          <label style={{ fontSize: "40px" }}>{uniqueNames.size ?? 0}</label>
+          <label style={{ fontSize: "40px" }}>
+            {residents?.length && residents?.length - numOut?.length}
+          </label>
         </StatsBlock>
       </Wrapper>
     </Container>

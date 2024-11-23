@@ -2,6 +2,7 @@ import { ModalWrapper } from "@/app/admin/components/Dashboard/styled";
 import { Table } from "@/app/admin/components/Table/styled";
 import Row from "./Row";
 import { DayAttendanceResponse, UserResponse } from "../../../../../api/types";
+import { ReactNode } from "react";
 
 interface ModalContentsProps {
   inModal: boolean;

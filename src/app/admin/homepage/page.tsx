@@ -89,12 +89,26 @@ export default function HomePage() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const sorted = attendanceData?.sort((a, b) => Number(b.id) - Number(a.id));
+  const uniqueNames = new Map<String, DayAttendanceResponse>();
+  const filterUniqueByName = (data: DayAttendanceResponse[]) => {
+    return data.filter((item) => {
+      if (!uniqueNames.has(item.userId as String)) {
+        uniqueNames.set(item.userId as String, item);
+        return true; // Keep the item
+      }
+      return false; // Skip duplicates
+    });
+  };
+
+  filterUniqueByName(sorted);
+
   return (
     <>
       <Header />
       <Date>{timeNow}</Date>
-      <Dashboard attendanceData={attendanceData} userData={userData} />
-      <ResidentsTable attendanceData={attendanceData} userData={userData} />
+      <Dashboard attendanceData={uniqueNames} userData={userData} />
+      <ResidentsTable attendanceData={uniqueNames} userData={userData} />
     </>
   );
 }

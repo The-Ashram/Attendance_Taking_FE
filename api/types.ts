@@ -106,7 +106,8 @@ export interface DayAttendanceResponse {
   checkInTime?: string;
   reason?: string;
   remarks?: string;
-  verifiedBy?: string;
+  checkInVerifiedBy?: string;
+  checkOutVerifiedBy?: string;
   status?: string;
   userId?: string;
   id?: string;
