@@ -26,6 +26,7 @@ export default function LoginModal() {
 
   const onLogin = async (data: LoginPayload) => {
     setLoginError(false); // Reset the login error state before making the request
+    data.email = data.email.toLowerCase();
     await api
       .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data)
       .then((r) => {

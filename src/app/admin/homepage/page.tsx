@@ -68,6 +68,27 @@ export default function HomePage() {
     getUsers();
   }, []);
 
+  useEffect(() => {
+    const getAttendanceForTheDay = async () => {
+      const response = await api.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/attendance`,
+        { params: { date: `${day}` } },
+      );
+
+      if (response.status === 404) {
+        setAttendanceData([]);
+      } else {
+        const data = await response.data;
+        setAttendanceData(data.attendances);
+      }
+    };
+
+    const intervalId = setInterval(getAttendanceForTheDay, 120000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <>
       <Header />
