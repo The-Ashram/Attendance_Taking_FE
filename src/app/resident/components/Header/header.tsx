@@ -10,7 +10,7 @@ export default function Header() {
   const router = useRouter();
   const path = usePathname();
   const isHomepage = path === "/resident/homepage";
-  // const isRequestForm = path === "/resident/requestform";
+  const isAccount = path === "/resident/account";
 
   function accountsHandler() {
     router.push("/resident/account");
@@ -25,10 +25,15 @@ export default function Header() {
     router.push("/");
   }
 
+  function refreshHandler() {
+    window.location.reload();
+  }
+
   return (
     <Wrapper>
       {isHomepage ? null : <Button onClick={homeHandler}>Home</Button>}
-      <Button onClick={accountsHandler}>Account</Button>
+      {isAccount ? null : <Button onClick={accountsHandler}>Account</Button>}
+      <Button onClick={refreshHandler}>Refresh</Button>
       <Button onClick={logoutHandler}>Log Out</Button>
     </Wrapper>
   );

@@ -28,6 +28,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const isHome = pathname === "/admin/homepage";
+  const isAccount = pathname === "/admin/account";
   const [isVisible, setVisible] = useState(false);
 
   const LogoutHandler = () => {
@@ -54,6 +55,10 @@ export default function Header() {
 
   const ModalHandler = () => {
     setVisible(false);
+  };
+
+  const RefreshHandler = () => {
+    window.location.reload();
   };
 
   const UserHandler = () => {
@@ -89,7 +94,8 @@ export default function Header() {
         {isHome ? null : <Button onClick={HomeHandler}>Home</Button>}
         <Button onClick={ReportHandler}>Attendance Report</Button>
         <Button onClick={UserHandler}>User Report</Button>
-        <Button onClick={AccountHandler}>Accounts</Button>
+        {isAccount ? null : <Button onClick={AccountHandler}>Accounts</Button>}
+        <Button onClick={RefreshHandler}>Refresh</Button>
       </ButtonsWrapper>
       <div style={{ width: "300px" }} />
       <Button onClick={LogoutHandler}>Log Out</Button>
