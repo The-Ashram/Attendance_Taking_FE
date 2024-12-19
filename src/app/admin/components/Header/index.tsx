@@ -31,6 +31,7 @@ export default function Header() {
   const isHome = pathname === "/admin/homepage";
   const isAccount = pathname === "/admin/account";
   const [isVisible, setVisible] = useState(false);
+  const [isAuditVisible, setAuditVisible] = useState(false);
 
   const LogoutHandler = () => {
     //logout stuff
@@ -56,7 +57,11 @@ export default function Header() {
   };
 
   const AuditReportHandler = () => {
-    setVisible(true);
+    setAuditVisible(true);
+  };
+
+  const AuditModalHandler = () => {
+    setAuditVisible(false);
   };
 
   const ModalHandler = () => {
@@ -95,7 +100,13 @@ export default function Header() {
         style={ReportStyles}
       >
         <ReportModal visible={isVisible} onClose={ModalHandler} />
-        <LogsReportModal visible={isVisible} onClose={ModalHandler} />
+      </Modal>
+      <Modal
+        isOpen={isAuditVisible}
+        onRequestClose={() => AuditModalHandler()}
+        style={ReportStyles}
+      >
+        <LogsReportModal visible={isAuditVisible} onClose={AuditModalHandler} />
       </Modal>
       <ButtonsWrapper>
         {isHome ? null : <Button onClick={HomeHandler}>Home</Button>}
