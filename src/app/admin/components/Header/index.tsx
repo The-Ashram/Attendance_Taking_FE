@@ -10,6 +10,7 @@ import Modal from "react-modal";
 import ReportModal from "@/app/admin/components/Header/ReportModal";
 import api from "../../../../../api/axios";
 import dayjs from "dayjs";
+import LogsReportModal from "./LogsReportModal";
 
 const ReportStyles = {
   content: {
@@ -30,6 +31,7 @@ export default function Header() {
   const isHome = pathname === "/admin/homepage";
   const isAccount = pathname === "/admin/account";
   const [isVisible, setVisible] = useState(false);
+  const [isAuditVisible, setAuditVisible] = useState(false);
 
   const LogoutHandler = () => {
     //logout stuff
@@ -45,12 +47,21 @@ export default function Header() {
       router.push("/admin/uaccount");
     }
   };
+
   const HomeHandler = () => {
     router.push("/admin/homepage");
   };
 
   const ReportHandler = () => {
     setVisible(true);
+  };
+
+  const AuditReportHandler = () => {
+    setAuditVisible(true);
+  };
+
+  const AuditModalHandler = () => {
+    setAuditVisible(false);
   };
 
   const ModalHandler = () => {
@@ -90,8 +101,16 @@ export default function Header() {
       >
         <ReportModal visible={isVisible} onClose={ModalHandler} />
       </Modal>
+      <Modal
+        isOpen={isAuditVisible}
+        onRequestClose={() => AuditModalHandler()}
+        style={ReportStyles}
+      >
+        <LogsReportModal visible={isAuditVisible} onClose={AuditModalHandler} />
+      </Modal>
       <ButtonsWrapper>
         {isHome ? null : <Button onClick={HomeHandler}>Home</Button>}
+        <Button onClick={AuditReportHandler}>Audit Report</Button>
         <Button onClick={ReportHandler}>Attendance Report</Button>
         <Button onClick={UserHandler}>User Report</Button>
         {isAccount ? null : <Button onClick={AccountHandler}>Accounts</Button>}
