@@ -2,6 +2,7 @@
 import {
   Button,
   ButtonsWrapper,
+  LogoutButton,
   Wrapper,
 } from "@/app/admin/components/Header/styled";
 import { usePathname, useRouter } from "next/navigation";
@@ -115,9 +116,8 @@ export default function Header() {
         <Button onClick={UserHandler}>User Report</Button>
         {isAccount ? null : <Button onClick={AccountHandler}>Accounts</Button>}
         <Button onClick={RefreshHandler}>Refresh</Button>
+        <LogoutButton onClick={LogoutHandler}>Log Out</LogoutButton>
       </ButtonsWrapper>
-      <div style={{ width: "300px" }} />
-      <Button onClick={LogoutHandler}>Log Out</Button>
     </Wrapper>
   );
 }
