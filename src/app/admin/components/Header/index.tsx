@@ -15,14 +15,35 @@ import LogsReportModal from "./LogsReportModal";
 
 const ReportStyles = {
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    height: "50%",
-    width: "50%",
+    width: '80%', // Ensure modal doesn't take full width on mobile
+    maxWidth: '600px', // Set a maximum width for large screens
+    margin: 'auto', // Center modal on screen
+    padding: '20px', // Add padding for inner content
+    borderRadius: '10px', // Rounded corners
+    background: '#fff', // Background color
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', // Light shadow for modal
+    display: 'flex',
+    flexDirection: "column" as "column",
+    justifyContent: 'center',
+  },
+
+  // Mobile specific styling
+  '@media (max-width: 600px)': {
+    content: {
+      width: '90%', // Ensure modal is responsive on small screens
+      maxWidth: '100%', // Full width on small screens
+      padding: '15px', // Reduce padding for mobile
+      borderRadius: '8px', // Slightly smaller border radius
+    },
+  },
+
+  // For small screens (phones)
+  '@media (max-width: 480px)': {
+    content: {
+      width: '95%', // Make it even smaller on mobile for more space
+      padding: '10px', // Smaller padding on phones
+      borderRadius: '8px', // Smaller border radius for a more compact look
+    },
   },
 };
 

@@ -3,23 +3,24 @@ import styled from "styled-components";
 export const FormWrapper = styled.div`
   text-align: left;
   padding: 20px;
+  width: 100%;
   background-color: #f9f9f9; /* Light background for contrast */
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a soft shadow */
   
-  /* Responsive adjustments */
+  
+  /* Mobile Optimization */
   @media (max-width: 768px) {
-    padding: 15px; /* Slightly reduced padding on smaller screens */
+    padding: 18px; /* Slightly reduced padding on tablets */
   }
 
   @media (max-width: 480px) {
-    padding: 10px; /* Even smaller padding for very small screens */
+    padding: 10px; /* Smaller padding for very small screens */
   }
 `;
 
-
 export const Form = styled.form`
-  max-width: 600px;
+  max-width: 100%; /* Make form flexible to fit smaller screens */
   margin: 0 auto;
   border: 1px solid #ccc;
   padding: 20px;
@@ -32,7 +33,7 @@ export const Form = styled.form`
     box-shadow: 0 0 8px rgba(0, 112, 243, 0.3); /* Blue glow when focused */
   }
 
-  /* Responsive adjustments */
+  /* Mobile Optimization */
   @media (max-width: 768px) {
     padding: 18px;
   }
@@ -89,6 +90,14 @@ export const InputDetails = styled.div`
   }
 `;
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Add gap between buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  margin-top: 10px;
+  width: 100%; /* Ensure container takes full width */
+`;
 
 export const SubmitButton = styled.button`
   text-align: center;
@@ -101,6 +110,10 @@ export const SubmitButton = styled.button`
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  
+  /* Ensure button doesn't overflow */
+  max-width: 300px; /* Optional: Limit max width */
+  box-sizing: border-box; /* Include padding in width calculation */
 
   &:hover {
     background-color: #45a049;
@@ -118,7 +131,13 @@ export const SubmitButton = styled.button`
     outline: none;
     box-shadow: 0 0 0 4px rgba(72, 239, 126, 0.5);
   }
+
+  @media (max-width: 768px) {
+    font-size: 14px; /* Smaller font size on smaller screens */
+    padding: 10px 20px; /* Adjust padding for smaller screens */
+  }
 `;
+
 
 export const CancelButton = styled.button`
   text-align: center;

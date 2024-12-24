@@ -21,6 +21,8 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     height: "70%",
     width: "70%",
+    maxWidth: "90%", // Add max-width for smaller screens
+    padding: "20px", // Add padding for better spacing
   },
 };
 
@@ -32,8 +34,10 @@ const deleteStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    height: "40%",
-    width: "40%",
+    height: "45%",
+    width: "60%",
+    maxWidth: "90%", // Add max-width for smaller screens
+    padding: "20px", // Add padding for better spacing
   },
 };
 

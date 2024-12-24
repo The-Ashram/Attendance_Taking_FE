@@ -1,8 +1,4 @@
-import {
-  Container,
-  StatsBlock,
-  Wrapper,
-} from "@/app/admin/components/Dashboard/styled";
+import { Container, StatsBlock, Wrapper } from "@/app/admin/components/Dashboard/styled";
 import { useState } from "react";
 import Modal from "react-modal";
 import ModalContents from "@/app/admin/components/Dashboard/ModalContents";
@@ -18,10 +14,23 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     height: "70%",
     width: "70%",
-    maxWidth: "90%", // Adjust max width on smaller screens
-    padding: "20px", // Padding for better content spacing
+  },
+
+  '@media (max-width: 768px)': {
+    content: {
+      width: '90%',
+      height: '60%',
+    },
+  },
+
+  '@media (max-width: 480px)': {
+    content: {
+      width: '95%',
+      height: '50%',
+    },
   },
 };
+
 
 interface Props {
   attendanceData: Map<String, DayAttendanceResponse>;
@@ -51,7 +60,6 @@ export default function Dashboard({ attendanceData, userData }: Props) {
     .flatMap((s) => s[1]);
 
   const residents = userData?.users.filter((u) => u.role === "resident");
-
   return (
     <Container>
       <Modal
@@ -64,12 +72,12 @@ export default function Dashboard({ attendanceData, userData }: Props) {
       </Modal>
       <Wrapper>
         <StatsBlock onClick={() => modalHandler(false)}>
-          <label style={{ fontSize: "1.5rem" }}>Residents Out</label>
-          <label style={{ fontSize: "2.5rem" }}>{numOut?.length ?? 0}</label>
+          <label style={{ fontSize: "25px" }}>Residents Out</label>
+          <label style={{ fontSize: "40px" }}>{numOut?.length ?? 0}</label>
         </StatsBlock>
         <StatsBlock onClick={() => modalHandler(true)}>
-          <label style={{ fontSize: "1.5rem" }}>Residents In</label>
-          <label style={{ fontSize: "2.5rem" }}>
+          <label style={{ fontSize: "25px" }}>Residents In</label>
+          <label style={{ fontSize: "40px" }}>
             {residents?.length && residents?.length - numOut?.length}
           </label>
         </StatsBlock>
