@@ -18,6 +18,8 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     height: "70%",
     width: "70%",
+    maxWidth: "90%", // Adjust max width on smaller screens
+    padding: "20px", // Padding for better content spacing
   },
 };
 
@@ -49,6 +51,7 @@ export default function Dashboard({ attendanceData, userData }: Props) {
     .flatMap((s) => s[1]);
 
   const residents = userData?.users.filter((u) => u.role === "resident");
+
   return (
     <Container>
       <Modal
@@ -61,12 +64,12 @@ export default function Dashboard({ attendanceData, userData }: Props) {
       </Modal>
       <Wrapper>
         <StatsBlock onClick={() => modalHandler(false)}>
-          <label style={{ fontSize: "25px" }}>Residents Out</label>
-          <label style={{ fontSize: "40px" }}>{numOut?.length ?? 0}</label>
+          <label style={{ fontSize: "1.5rem" }}>Residents Out</label>
+          <label style={{ fontSize: "2.5rem" }}>{numOut?.length ?? 0}</label>
         </StatsBlock>
         <StatsBlock onClick={() => modalHandler(true)}>
-          <label style={{ fontSize: "25px" }}>Residents In</label>
-          <label style={{ fontSize: "40px" }}>
+          <label style={{ fontSize: "1.5rem" }}>Residents In</label>
+          <label style={{ fontSize: "2.5rem" }}>
             {residents?.length && residents?.length - numOut?.length}
           </label>
         </StatsBlock>
@@ -74,3 +77,4 @@ export default function Dashboard({ attendanceData, userData }: Props) {
     </Container>
   );
 }
+

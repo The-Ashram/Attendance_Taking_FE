@@ -1,6 +1,7 @@
 "use client";
 import {
   Button,
+  LogoutButton,
   Title,
   Wrapper,
 } from "@/app/resident/components/Header/styled";
@@ -34,7 +35,7 @@ export default function Header() {
       {isHomepage ? null : <Button onClick={homeHandler}>Home</Button>}
       {isAccount ? null : <Button onClick={accountsHandler}>Account</Button>}
       <Button onClick={refreshHandler}>Refresh</Button>
-      <Button onClick={logoutHandler}>Log Out</Button>
+      <LogoutButton onClick={logoutHandler}>Log Out</LogoutButton>
     </Wrapper>
   );
 }

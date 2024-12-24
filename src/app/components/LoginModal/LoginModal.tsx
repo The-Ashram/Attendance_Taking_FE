@@ -3,6 +3,7 @@ import {
   ErrorMessage,
   InputBox,
   InputWrapper,
+  LoginLabel,
   Wrapper,
 } from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
@@ -20,9 +21,7 @@ export default function LoginModal() {
   } = useForm<LoginPayload>();
   const [isLoginError, setLoginError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [apiresponse, setApiResponse] = useState<LoginResponse | undefined>(
-    undefined,
-  );
+  const [apiresponse, setApiResponse] = useState<LoginResponse | undefined>(undefined);
 
   const onLogin = async (data: LoginPayload) => {
     setLoginError(false); // Reset the login error state before making the request
@@ -58,7 +57,9 @@ export default function LoginModal() {
 
   return (
     <Wrapper>
-      <label style={{ color: "black", textAlign: "center" }}>Login</label>
+      <LoginLabel>Login</LoginLabel>
+      {/* Show error message only if there's a login error */}
+      {isLoginError && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <form onSubmit={handleSubmit(onLogin)}>
         <InputWrapper>
           <InputBox
@@ -71,15 +72,18 @@ export default function LoginModal() {
             })}
             placeholder={"Email"}
           />
-          <ErrorMessage>{errors.email?.message as string}</ErrorMessage>
+          {/* Show error message only if there's an error */}
+          {errors.email && <ErrorMessage>{errors.email?.message}</ErrorMessage>}
+          
           <InputBox
             {...register("password", { required: "Fill in your password" })}
             type={"password"}
             placeholder={"Password"}
           />
-          <ErrorMessage>{errors.password?.message as string}</ErrorMessage>
+          {/* Show error message only if there's an error */}
+          {errors.password && <ErrorMessage>{errors.password?.message}</ErrorMessage>}
         </InputWrapper>
-        {isLoginError && <ErrorMessage>{errorMessage}</ErrorMessage>}
+
         <InputWrapper>
           <CTAButton type="submit">Submit</CTAButton>
         </InputWrapper>
