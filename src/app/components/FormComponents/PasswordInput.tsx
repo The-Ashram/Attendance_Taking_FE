@@ -20,15 +20,36 @@ export default function PasswordInput<T extends FieldValues>({
   rules = {}, // Default to empty object if no rules provided
 }: Props<T>) {
   return (
-    <>
-      <label>
-        <strong>{label}:</strong>
-        <input
-          type="password"
-          style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-          {...register(name, rules)} // Registering the password input
-        />
+    <div style={{ marginBottom: "16px" }}>
+      <label
+        htmlFor={name}
+        style={{
+          fontSize: "14px",
+          fontWeight: "600",
+          marginBottom: "6px",
+          display: "inline-block",
+          color: "#333",
+        }}
+      >
+        {label}
       </label>
-    </>
+      <input
+        type="password"
+        id={name}
+        style={{
+          width: "100%",
+          padding: "12px 16px",
+          margin: "6px 0",
+          borderRadius: "8px",
+          border: "1px solid #ccc",
+          fontSize: "14px",
+          color: "#333",
+          outline: "none",
+          transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+        }}
+        {...register(name, rules)} // Registering the password input
+        aria-describedby={`${name}-help`} // Accessible error handling
+      />
+    </div>
   );
 }

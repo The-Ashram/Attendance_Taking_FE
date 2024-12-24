@@ -82,14 +82,16 @@ export default function LogsReportModal({ visible, onClose }: Props) {
       {visible && (
         <FormWrapper>
           <Form onSubmit={SubmitHandler}>
-            <h2 style={{ textAlign: "center", marginBottom: "10%" }}>
+            <h2 style={{ textAlign: "center", marginBottom: "10%", fontSize: "1rem" }}>
               Generate Audit Report
             </h2>
+  
             <div
               style={{
                 display: "flex",
+                flexDirection: "column", // Stack date pickers vertically on smaller screens
+                alignItems: "center", // Center the content horizontally
                 marginBottom: "20px",
-                justifyContent: "center",
               }}
             >
               <BasicDatePicker
@@ -99,11 +101,13 @@ export default function LogsReportModal({ visible, onClose }: Props) {
                 setValue={handleDateChange}
               />
             </div>
+  
             <div
               style={{
                 display: "flex",
+                flexDirection: "column", // Stack vertically on smaller screens
+                alignItems: "center", // Center the content horizontally
                 marginBottom: "20px",
-                justifyContent: "center",
               }}
             >
               {!!formValues.from && (
@@ -115,15 +119,28 @@ export default function LogsReportModal({ visible, onClose }: Props) {
                 />
               )}
             </div>
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-              <CancelButton onClick={onClose}>Cancel</CancelButton>
+  
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap", // Ensure buttons wrap on smaller screens
+                gap: "10px", // Add gap between buttons
+                justifyContent: "center", // Center the buttons
+                marginTop: "20px", // Add margin-top for spacing
+              }}
+            >
+              <CancelButton onClick={onClose} style={{ flex: "1 1 45%" }}>
+                Cancel
+              </CancelButton>
               {formValues.from && formValues.to && (
-                <SubmitButton type="submit">Generate</SubmitButton>
+                <SubmitButton type="submit" style={{ flex: "1 1 45%" }}>
+                  Generate
+                </SubmitButton>
               )}
             </div>
           </Form>
         </FormWrapper>
       )}
     </>
-  );
+  );  
 }

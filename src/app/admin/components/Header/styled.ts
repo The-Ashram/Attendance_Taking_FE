@@ -16,8 +16,8 @@ export const Wrapper = styled.div`
     }
 
     @media (max-width: 480px) {
-        height: 15vh; /* Even more space on very small screens */
-        padding: 8px;
+        height: 20vh; /* Even more space on very small screens */
+        padding: 4px;
     }
 `;
 

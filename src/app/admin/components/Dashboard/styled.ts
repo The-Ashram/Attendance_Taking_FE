@@ -1,68 +1,77 @@
 import styled from "styled-components";
 
-// Container for overall layout
 export const Container = styled.div`
-  width: 100%;
   display: flex;
-  justify-content: center;
-  padding: 3%;
-  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-
-  @media (max-width: 768px) {
-    padding: 5%; /* Adjust padding for mobile */
-  }
-
-  @media (max-width: 480px) {
-    padding: 8%; /* Further adjust padding for very small screens */
-  }
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7; // Light background for the dashboard
 `;
 
-// Wrapper for inner content
 export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 20px;  /* Gap between the two blocks */
+  align-items: center;
   width: 100%;
-  max-width: 1000px; /* Max width to prevent the blocks from stretching too far apart */
-  
+  gap: 20px;  // Add space between items
+
+  @media (max-width: 1024px) {
+    justify-content: space-evenly;
+  }
+
   @media (max-width: 768px) {
-    gap: 15px; /* Slightly smaller gap on smaller screens */
+    flex-direction: row; // Keep items side by side on tablets
+    align-items: center; // Ensure they align in the center
   }
 
   @media (max-width: 480px) {
-    gap: 10px; /* Even smaller gap for mobile */
+    flex-direction: row; // Items will stay in a row even on mobile, with wrap
+    justify-content: center;
+    align-items: center;
+    gap: 15px; // Adjust gap for mobile view
   }
 `;
 
-// StatsBlock button (the blocks that display stats)
-export const StatsBlock = styled.button`
-  flex: 1;  /* Makes the stats blocks take equal width */
-  min-width: 120px;  /* Minimum width to avoid squishing on smaller screens */
-  width: 30%; /* Width of each block */
-  height: 100px;
-  padding: 15px;
-  display: grid;
-  background-color: lightseagreen;
-  border: lightseagreen;
-  border-radius: 15px;
+export const StatsBlock = styled.div`
+  background-color: #4caf50; /* A stronger green for better contrast */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  flex: 1 1 45%; // Allow flex items to grow and shrink
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  font-size: 16px; /* Set font size for readability */
-  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
   &:hover {
-    background-color: lightcoral;
+    background-color: #1976d2; /* Stronger blue for hover */
+  }
+
+  label {
+    font-size: 16px;
+    color: black; /* Set font color to black */
+  }
+
+  label:nth-child(2) {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: black; /* Ensure the font is black for the second label as well */
   }
 
   @media (max-width: 768px) {
-    width: 45%; /* Adjust block width for smaller screens */
-    font-size: 14px; /* Slightly reduce font size for mobile */
-    height: 80px; /* Adjust height for smaller screens */
+    flex: 1 1 40%; /* Adjust the width for tablets */
+    margin: 10px;
   }
 
   @media (max-width: 480px) {
-    width: 100%; /* Make blocks full width on very small screens */
-    font-size: 12px; /* Further reduce font size for small screens */
-    height: 70px; /* Adjust height even further */
+    flex: 1 1 45%; /* Adjust the width for mobile devices, side by side still */
+    margin: 10px 0;
   }
 `;
 

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const Table = styled.table`
-  min-width: 80%; /* Ensures table never overflows the container */
+  width: 100%; /* Full width of container */
+  max-width: 90%; /* Ensure it never exceeds container width */
   border-collapse: collapse;
   margin: 20px 0;
-  font-size: 16px; /* Adjusted font size for mobile */
+  font-size: 16px; /* Adjusted font size for larger screens */
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -51,9 +52,22 @@ export const Table = styled.table`
 
   /* Mobile Optimization */
   @media (max-width: 768px) {
-    font-size: 14px; /* Reduce font size for better readability */
+    font-size: 14px; /* Adjust font size */
     th, td {
-      padding: 10px 12px; /* Slightly smaller padding */
+      padding: 10px 12px; /* Slightly smaller padding for medium screens */
+    }
+
+    tbody tr {
+      &:nth-child(even) {
+        background-color: #f2f2f2; /* Better contrast on medium screens */
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px; /* Further reduced font size for small screens */
+    th, td {
+      padding: 8px 10px; /* Further reduce padding for small screens */
     }
 
     tbody tr {
@@ -61,18 +75,9 @@ export const Table = styled.table`
         background-color: #f2f2f2; /* Adjusted background for better contrast */
       }
     }
-  }
 
-  @media (max-width: 480px) {
-    font-size: 12px; /* Further reduce font size for very small screens */
-    th, td {
-      padding: 8px 10px; /* Further reduce padding */
-    }
-
-    tbody tr {
-      &:nth-child(even) {
-        background-color: #f2f2f2;
-      }
-    }
+    /* Allow horizontal scrolling for very small screens */
+    overflow-x: auto;
+    display: block;
   }
 `;

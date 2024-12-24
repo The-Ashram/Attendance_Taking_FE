@@ -1,4 +1,5 @@
 import {
+  ButtonContainer,
   CancelButton,
   FormWrapper,
   SubmitButton,
@@ -33,14 +34,15 @@ export default function DeleteModalContents({
       })
       .catch((r) => setErrorMessage(r.response.data));
   };
+  
   return (
     <>
       {visible && (
         <FormWrapper>
-          <h2 style={{ textAlign: "center", marginBottom: "10vh" }}>
+          <h2 style={{ textAlign: "center", marginBottom: "10vh", fontSize: "1.1rem" }}>
             Confirm Delete?
           </h2>
-          <p style={{ textAlign: "center", marginBottom: "10vh" }}>
+          <p style={{ textAlign: "center", marginBottom: "10vh", fontSize: "0.8rem" }}>
             This cannot be undone
           </p>
           {errorMsg && (
@@ -48,10 +50,10 @@ export default function DeleteModalContents({
               {errorMsg}
             </ErrorMessage>
           )}
-          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <ButtonContainer>
             <CancelButton onClick={onClose}>Cancel</CancelButton>
             <SubmitButton onClick={onDelete}>Confirm</SubmitButton>
-          </div>
+          </ButtonContainer>
         </FormWrapper>
       )}
     </>
