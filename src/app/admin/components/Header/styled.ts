@@ -49,13 +49,13 @@ export const ButtonsWrapper = styled.div`
 // General button style
 export const Button = styled.button`
   flex-grow: 1; /* Makes all buttons take equal space except the last one */
-  max-width: 200px; /* Ensure buttons don't grow too wide */
+  max-width: 240px; /* Ensure buttons don't grow too wide */
   background-color: #0070f3; /* Primary button color */
   color: #ffffff; /* Text color */
   border: none; /* Remove default border */
-  padding: 16px 24px; /* Larger padding for bigger buttons */
+  padding: 20px 28px; /* Larger padding for bigger buttons */
   border-radius: 8px; /* Rounded corners */
-  font-size: 16px; /* Larger font size for better readability */
+  font-size: 20px; /* Larger font size for better readability */
   font-weight: 600; /* Bold font for emphasis */
   cursor: pointer; /* Pointer cursor for buttons */
   transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */

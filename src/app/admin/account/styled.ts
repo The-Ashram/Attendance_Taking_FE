@@ -45,7 +45,7 @@ export const CreateContainer = styled.div`
 export const Button = styled.button`
   text-align: center;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 24px;
   background-color: cadetblue;
   color: white;
   border: none;

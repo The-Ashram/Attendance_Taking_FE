@@ -73,7 +73,7 @@ export const InputDetails = styled.div`
   padding: 15px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
   
   &:hover {
     background-color: #eaeaea; /* Slightly darker background on hover */
