@@ -23,6 +23,7 @@ export default function BasicDatePicker({
       <DemoContainer components={["DatePicker"]}>
         <DatePicker
           disableFuture
+          format="DD/MM/YYYY"
           minDate={miniDate}
           label={label}
           onChange={(newValue) =>
