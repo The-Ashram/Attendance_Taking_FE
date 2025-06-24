@@ -22,12 +22,12 @@ export default function HomePage() {
   }, []);
 
   const [timeNow, setTime] = useState(
-    dayjs().format("ddd DD-MM-YYYY hh:mm A").toString(),
+    dayjs().format("dddd DD-MM-YYYY HH:mm").toString()
   );
 
   useEffect(() => {
     const updateTime = () => {
-      setTime(dayjs().format("ddd DD-MM-YYYY hh:mm A").toString());
+      setTime(dayjs().format("dddd DD-MM-YYYY HH:mm").toString());
     };
 
     // Set interval to update time every second
@@ -39,7 +39,7 @@ export default function HomePage() {
 
   const day = dayjs().format("YYYY-MM-DD");
   const [attendanceData, setAttendanceData] = useState<DayAttendanceResponse[]>(
-    [],
+    []
   );
   const [userData, setUserData] = useState<UserResponse | null>(null);
 
@@ -47,7 +47,7 @@ export default function HomePage() {
     const getAttendanceForTheDay = async () => {
       const response = await api.get(
         `${process.env.NEXT_PUBLIC_API_URL}/attendance`,
-        { params: { date: `${day}` } },
+        { params: { date: `${day}` } }
       );
 
       if (response.status === 404) {
@@ -59,7 +59,7 @@ export default function HomePage() {
     };
     const getUsers = async () => {
       const userResponse = await api.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/user`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user`
       );
       const userData = await userResponse.data;
       setUserData(userData);
@@ -72,7 +72,7 @@ export default function HomePage() {
     const getAttendanceForTheDay = async () => {
       const response = await api.get(
         `${process.env.NEXT_PUBLIC_API_URL}/attendance`,
-        { params: { date: `${day}` } },
+        { params: { date: `${day}` } }
       );
 
       if (response.status === 404) {
@@ -106,7 +106,12 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <Date>{timeNow}</Date>
+      {/* <Date>{timeNow}</Date> */}
+      <Date>
+        <span>{dayjs().format("dddd")}</span>
+        <span style={{ margin: "0 22vw" }}>{dayjs().format("DD-MM-YYYY")}</span>
+        <span>{dayjs().format("HH:mm")}</span>
+      </Date>
       <Dashboard attendanceData={uniqueNames} userData={userData} />
       <ResidentsTable attendanceData={uniqueNames} userData={userData} />
     </>

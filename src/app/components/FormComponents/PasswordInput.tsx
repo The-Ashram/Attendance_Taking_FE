@@ -43,7 +43,8 @@ export default function PasswordInput<T extends FieldValues>({
           borderRadius: "8px",
           border: "1px solid #ccc",
           fontSize: "14px",
-          color: "#333",
+          color: "#000", // changed to black text
+          backgroundColor: "#fff", // added white background
           outline: "none",
           transition: "border-color 0.2s ease, box-shadow 0.2s ease",
         }}

@@ -5,7 +5,7 @@ export const Table = styled.table`
   max-width: 90%; /* Ensure it never exceeds container width */
   border-collapse: collapse;
   margin: 20px 0;
-  font-size: 16px; /* Adjusted font size for larger screens */
+  font-size: 30px; /* Adjusted font size for larger screens */
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
