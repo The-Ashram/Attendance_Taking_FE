@@ -1,4 +1,5 @@
 import { DayAttendanceResponse, UserResponse } from "../../../../../api/types";
+import dayjs from "dayjs";
 
 interface Props {
   row: DayAttendanceResponse;
@@ -11,7 +12,7 @@ export default function Row({ row, inModal, userData }: Props) {
   return (
     <tr>
       <td>{residentData?.[0].name}</td>
-      <td>{row.checkOutTime}</td>
+      <td>{dayjs(row.checkOutTime).format("HH:mm")}</td>
       {!inModal && <td>{row.reason}</td>}
     </tr>
   );

@@ -4,6 +4,8 @@ export const Date = styled.div`
   font-size: 2vw; /* Base font size based on viewport width */
   text-align: center;
   margin-top: 2vh; /* Margin based on viewport height */
+  color: firebrick;
+  font-weight: 700;
 
   @media (max-width: 1024px) {
     font-size: 3vw; /* Slightly larger font size for tablets */

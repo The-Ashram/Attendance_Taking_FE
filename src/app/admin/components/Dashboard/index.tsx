@@ -72,12 +72,12 @@ export default function Dashboard({ attendanceData, userData }: Props) {
       </Modal>
       <Wrapper>
         <StatsBlock onClick={() => modalHandler(false)}>
-          <label style={{ fontSize: "25px" }}>Residents Out</label>
-          <label style={{ fontSize: "40px" }}>{numOut?.length ?? 0}</label>
+          <label style={{ fontSize: "35px" }}>Residents Out</label>
+          <label style={{ fontSize: "50px" }}>{numOut?.length ?? 0}</label>
         </StatsBlock>
         <StatsBlock onClick={() => modalHandler(true)}>
-          <label style={{ fontSize: "25px" }}>Residents In</label>
-          <label style={{ fontSize: "40px" }}>
+          <label style={{ fontSize: "35px" }}>Residents In</label>
+          <label style={{ fontSize: "50px" }}>
             {residents?.length && residents?.length - numOut?.length}
           </label>
         </StatsBlock>
