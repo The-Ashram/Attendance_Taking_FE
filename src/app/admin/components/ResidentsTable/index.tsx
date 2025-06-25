@@ -21,6 +21,7 @@ export default function ResidentsTable({ attendanceData, userData }: Props) {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Phase</th>
             <th>To Note</th>
             <th>In</th>
             <th>Out</th>

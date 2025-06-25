@@ -20,6 +20,7 @@ export default function Row({ attendanceData, userData, adminData }: Props) {
     <tr>
       <td>{userData?.name}</td>
       <td>{userData?.phaseNumber}</td>
+      <td>{userData?.toNote}</td>
       <td>{aData?.[0]?.status !== "Out" && <GoDotFill />}</td>
       <td>{aData?.[0]?.status === "Out" && <GoDotFill />}</td>
       <td>
