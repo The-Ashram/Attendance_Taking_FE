@@ -131,6 +131,7 @@ export default function Account() {
                   <tr>
                     <th>Name</th>
                     <th>To Note</th>
+                    <th>Phase Number</th>
                     <th>Email</th>
                     <th>Phone Number</th>
                     <th>Role</th>

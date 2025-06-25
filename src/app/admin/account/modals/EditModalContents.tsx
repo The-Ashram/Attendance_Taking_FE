@@ -92,6 +92,13 @@ export default function EditModalContents({
                 />
                 <InputBox
                   disabled={false}
+                  label="To Note"
+                  name="toNote"
+                  defaultValue={data.toNote}
+                  register={register}
+                />
+                <InputBox
+                  disabled={false}
                   label="Employee ID"
                   name="employeeId"
                   defaultValue={data.employeeID}
@@ -133,6 +140,13 @@ export default function EditModalContents({
                   label="Phase Number"
                   name="phaseNumber"
                   defaultValue={data.phaseNumber}
+                  register={register}
+                />
+                <InputBox
+                  disabled={false}
+                  label="To Note"
+                  name="toNote"
+                  defaultValue={data.toNote}
                   register={register}
                 />
                 <PasswordInput

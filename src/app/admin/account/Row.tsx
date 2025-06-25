@@ -99,6 +99,7 @@ export default function Row({ row, setRefresh }: Props) {
       <tr>
         <td>{row.name}</td>
         <td>{row.toNote}</td>
+        <td>{row.phaseNumber}</td>
         <td>{row.email}</td>
         <td>{row.phoneNumber}</td>
         <td>{row.role}</td>
