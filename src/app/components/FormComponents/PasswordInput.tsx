@@ -24,9 +24,9 @@ export default function PasswordInput<T extends FieldValues>({
       <label
         htmlFor={name}
         style={{
-          fontSize: "14px",
+          fontSize: "1.5rem",
           fontWeight: "600",
-          marginBottom: "6px",
+          marginBottom: "8px",
           display: "inline-block",
           color: "#333",
         }}
@@ -42,7 +42,7 @@ export default function PasswordInput<T extends FieldValues>({
           margin: "6px 0",
           borderRadius: "8px",
           border: "1px solid #ccc",
-          fontSize: "14px",
+          fontSize: "1.3rem",
           color: "#000", // changed to black text
           backgroundColor: "#fff", // added white background
           outline: "none",
