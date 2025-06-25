@@ -1,8 +1,9 @@
 "use client";
 
+import type { Styles } from "react-modal"; // Import type from react-modal
 import Header from "../components/Header";
 import { Button, CreateContainer, Wrapper } from "@/app/admin/account/styled";
-import { Table, TableWrapper } from "@/app/admin/components/Table/styled";
+import { Table } from "@/app/admin/components/Table/styled";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Row from "./Row";
@@ -14,7 +15,7 @@ import api from "../../../../api/axios";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
 
-const customStyles = {
+const customStyles: Styles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     display: "flex",

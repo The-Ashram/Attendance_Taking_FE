@@ -5,13 +5,15 @@ import EditModalContents from "@/app/admin/account/modals/EditModalContents";
 import Modal from "react-modal";
 import DeleteModalContents from "./modals/DeleteModalContents";
 import { User } from "../../../../api/types";
+import type { Styles } from "react-modal"; // Import type from react-modal
+
 
 interface Props {
   row: User;
   setRefresh: Dispatch<SetStateAction<boolean>>;
 }
 
-const customStyles = {
+const customStyles: Styles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Dimmed background
     display: "flex",
@@ -21,7 +23,7 @@ const customStyles = {
     padding: "16px",
   },
   content: {
-    position: "relative", // More predictable than absolute + transform
+    position: "relative" as "relative", // More predictable than absolute + transform
     height: "70%",
     width: "70%",
     maxHeight: "90vh", // Prevent overflow on shorter screens
@@ -33,7 +35,7 @@ const customStyles = {
   },
 };
 
-const deleteStyles = {
+const deleteStyles: Styles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Dimmed background
     display: "flex",
