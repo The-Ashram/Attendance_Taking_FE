@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 20px; // Add space between child elements
 
+  @media (max-width: 1024px) {
+    margin-top: 8vh;
+  }
+
   /* Responsive styles */
   @media (max-width: 768px) {
     margin-top: 10vh; // Adjust top margin for mobile
@@ -34,6 +38,10 @@ export const CreateContainer = styled.div`
     }
   }
 
+  @media (max-width: 1024px) {
+    width: 90%;
+  }
+
   /* Responsive styles */
   @media (max-width: 768px) {
     justify-content: center; // Center the svg button on mobile
@@ -55,6 +63,11 @@ export const Button = styled.button`
 
   &:hover {
     background-color: #0056b3; // Change background on hover
+  }
+
+  @media (max-width: 1024px) {
+    padding: 9px 18px;
+    font-size: 20px;
   }
 
   /* Responsive styles */

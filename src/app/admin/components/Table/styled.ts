@@ -50,10 +50,30 @@ export const Table = styled.table`
     }
   }
 
+  /* iPad & medium screens */
+  @media (max-width: 1024px) {
+    font-size: 20px;
+    th,
+    td {
+      padding: 10px 12px;
+    }
+
+    tbody tr {
+      &:nth-child(even) {
+        background-color: #f2f2f2; /* Better contrast on medium screens */
+      }
+    }
+
+    /* Allow horizontal scrolling for very small screens */
+    overflow-x: auto;
+    display: block;
+  }
+
   /* Mobile Optimization */
   @media (max-width: 768px) {
     font-size: 14px; /* Adjust font size */
-    th, td {
+    th,
+    td {
       padding: 10px 12px; /* Slightly smaller padding for medium screens */
     }
 
@@ -66,7 +86,8 @@ export const Table = styled.table`
 
   @media (max-width: 480px) {
     font-size: 12px; /* Further reduced font size for small screens */
-    th, td {
+    th,
+    td {
       padding: 8px 10px; /* Further reduce padding for small screens */
     }
 

@@ -89,6 +89,7 @@ export default function Account() {
               <th>Email</th>
               <th>Phone Number</th>
               <th>Role</th>
+              <th>To Note</th>
             </tr>
           </thead>
           <tbody>
@@ -100,6 +101,7 @@ export default function Account() {
                   <td>{row.email}</td>
                   <td>{row.phoneNumber}</td>
                   <td>{row.role}</td>
+                  <td>{row.toNote}</td>
                 </tr>
               ))}
           </tbody>

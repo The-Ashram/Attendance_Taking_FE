@@ -34,19 +34,35 @@ export default function DeleteModalContents({
       })
       .catch((r) => setErrorMessage(r.response.data));
   };
-  
+
   return (
     <>
       {visible && (
         <FormWrapper>
-          <h2 style={{ textAlign: "center", marginBottom: "10vh", fontSize: "1.1rem" }}>
+          <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "5vh",
+              fontSize: "3rem",
+              fontWeight: "600",
+              color: "#d32f2f",
+            }}
+          >
             Confirm Delete?
           </h2>
-          <p style={{ textAlign: "center", marginBottom: "10vh", fontSize: "0.8rem" }}>
-            This cannot be undone
+          <p
+            style={{
+              textAlign: "center",
+              marginBottom: "5vh",
+              fontSize: "1.6rem",
+              color: "#555",
+            }}
+          >
+            Are you sure you want to delete this user? <br /> <br />
+            <strong>This action cannot be undone.</strong>
           </p>
           {errorMsg && (
-            <ErrorMessage style={{ marginBottom: "3vh" }}>
+            <ErrorMessage style={{ marginBottom: "3vh", textAlign: "center" }}>
               {errorMsg}
             </ErrorMessage>
           )}
