@@ -1,4 +1,4 @@
-import { Table, TableWrapper } from "@/app/admin/components/Table/styled";
+import { Table } from "@/app/admin/components/Table/styled";
 import { Container } from "@/app/admin/components/ResidentsTable/styled";
 import Row from "@/app/admin/components/ResidentsTable/Row";
 import { DayAttendanceResponse, UserResponse } from "../../../../../api/types";
