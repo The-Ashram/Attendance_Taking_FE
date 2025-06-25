@@ -73,7 +73,7 @@ export const InputDetails = styled.div`
   padding: 15px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   
   &:hover {
     background-color: #eaeaea; /* Slightly darker background on hover */
@@ -93,16 +93,21 @@ export const InputDetails = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 10px; /* Add gap between buttons */
+  gap: 20px; /* Add gap between buttons */
   flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
   margin-top: 10px;
   width: 100%; /* Ensure container takes full width */
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 12px;
+  }
 `;
 
 export const SubmitButton = styled.button`
   text-align: center;
   padding: 12px 24px;
-  font-size: 16px;
+  font-size: 1.5rem;
   font-weight: bold;
   background-color: #4caf50;
   color: white;
@@ -133,7 +138,7 @@ export const SubmitButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 14px; /* Smaller font size on smaller screens */
+    font-size: 1rem; /* Smaller font size on smaller screens */
     padding: 10px 20px; /* Adjust padding for smaller screens */
   }
 `;
@@ -142,7 +147,7 @@ export const SubmitButton = styled.button`
 export const CancelButton = styled.button`
   text-align: center;
   padding: 12px 24px; /* Increased padding for a more balanced look */
-  font-size: 18px; /* Slightly larger font size for better readability */
+  font-size: 1.5rem; /* Slightly larger font size for better readability */
   background-color: #cccccc; /* Soft gray background */
   color: #333333; /* Dark text for better contrast */
   border: none;
@@ -172,12 +177,12 @@ export const CancelButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 16px; /* Adjust font size for smaller screens */
+    font-size: 1.1rem; /* Adjust font size for smaller screens */
     padding: 10px 20px; /* Adjust padding for smaller screens */
   }
 
   @media (max-width: 480px) {
-    font-size: 14px; /* Further reduce font size on very small screens */
+    font-size: 1rem; /* Further reduce font size on very small screens */
   }
 `;
 

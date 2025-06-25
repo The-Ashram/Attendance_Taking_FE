@@ -1,5 +1,6 @@
 "use client";
 
+import type { Styles } from "react-modal"; // Import type from react-modal
 import Header from "../components/Header";
 import { Button, CreateContainer, Wrapper } from "@/app/admin/account/styled";
 import { Table } from "@/app/admin/components/Table/styled";
@@ -14,16 +15,26 @@ import api from "../../../../api/axios";
 import { ErrorMessage } from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
 
-const customStyles = {
+const customStyles: Styles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000,
+    padding: "16px", // Add spacing for smaller screens
+  },
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    height: "70%",
-    width: "70%",
+    position: "relative",
+    width: "100%",
+    maxWidth: "600px",
+    maxHeight: "90vh",
+    padding: "24px",
+    background: "#fff",
+    borderRadius: "12px",
+    overflowY: "auto", // Scroll if content overflows
+    inset: "unset", // Override default top/left/right/bottom positioning
+    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
   },
 };
 
@@ -116,25 +127,27 @@ export default function Account() {
                 Create Resident
               </Button>
             </CreateContainer>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone Number</th>
-                  <th>Role</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {apiResponse?.users
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((row, index) => (
-                    <Row key={index} row={row} setRefresh={setRefresh} />
-                  ))}
-              </tbody>
-            </Table>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>To Note</th>
+                    <th>Phase Number</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Role</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {apiResponse?.users
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((row, index) => (
+                      <Row key={index} row={row} setRefresh={setRefresh} />
+                    ))}
+                </tbody>
+              </Table>
             {errorMsg && <ErrorMessage>{errorMsg}</ErrorMessage>}
           </Wrapper>
         </>

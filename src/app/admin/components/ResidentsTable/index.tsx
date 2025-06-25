@@ -13,7 +13,7 @@ export default function ResidentsTable({ attendanceData, userData }: Props) {
     ?.filter((u) => u.role === "resident")
     .sort((a, b) => a.name.localeCompare(b.name));
   const others = userData?.users?.filter(
-    (u) => u.role === "admin" || u.role === "user",
+    (u) => u.role === "admin" || u.role === "user"
   );
   return (
     <Container>

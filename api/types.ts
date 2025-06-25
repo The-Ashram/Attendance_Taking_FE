@@ -12,6 +12,7 @@ export interface User {
   email: string;
   phoneNumber: string;
   phaseNumber: string;
+  toNote: string;
   employeeID: string;
 }
 
@@ -33,6 +34,7 @@ export interface CreateRPayload {
   phoneNumber: string;
   password: string;
   phaseNumber: Number;
+  toNote: string;
   role: "resident";
 }
 
@@ -41,6 +43,7 @@ export interface CreateAPayload {
   email: string;
   phoneNumber: string;
   password: string;
+  toNote: string;
   employeeID: string;
   role: "admin";
 }
@@ -50,6 +53,7 @@ export interface CreateUPayload {
   email: string;
   phoneNumber: string;
   password: string;
+  toNote: string;
   employeeID: string;
   role: "user";
 }
@@ -83,11 +87,13 @@ export interface AttendanceResponse {
 
 export interface ResidentPatchPayload {
   id?: string | null;
+  toNote?: string;
   password: string;
 }
 
 export interface UserPatchPayload {
   id?: string | null;
+  toNote?: string;
   password: string;
 }
 
@@ -97,6 +103,7 @@ export interface AdminUserPatchPayload {
   phaseNumber?: string;
   phoneNumber?: string;
   email?: string;
+  toNote?: string;
   employeeId?: string;
   role?: string;
 }

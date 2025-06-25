@@ -128,7 +128,7 @@ export default function ReportModal({ visible, onClose }: Props) {
                 marginTop: "20px", // Add margin-top for spacing
               }}
             >
-              <CancelButton onClick={onClose} style={{ flex: "1 1 45%" }}>
+              <CancelButton type="button" onClick={onClose} style={{ flex: "1 1 45%" }}>
                 Cancel
               </CancelButton>
               {formValues.from && formValues.to && (

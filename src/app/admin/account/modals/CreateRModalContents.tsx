@@ -116,6 +116,16 @@ export default function CreateRModalContents({
               {errors.password && (
                 <ErrorMessage>{errors.password.message}</ErrorMessage>
               )}
+              <InputBox
+                disabled={false}
+                label="To Note"
+                name="toNote"
+                register={register}
+                rules={{ required: "Please fill up To Note! If none, please type \"Nil\"." }}
+              />
+              {errors.toNote && (
+                <ErrorMessage>{errors.toNote.message}</ErrorMessage>
+              )}
             </InputDetails>
             <SubmitButton>Submit</SubmitButton>
           </Form>

@@ -42,7 +42,7 @@ export default function CreateAModalContents({
         router.refresh();
       })
       .catch((r) =>
-        setErrorMessage(r.response.data + " Please check your submission"),
+        setErrorMessage(r.response.data + " Please check your submission")
       );
   };
 
@@ -110,6 +110,20 @@ export default function CreateAModalContents({
               />
               {errors.password && (
                 <ErrorMessage>{errors.password.message}</ErrorMessage>
+              )}
+              
+              <InputBox
+                disabled={false}
+                label="To Note"
+                name="toNote"
+                register={register}
+                rules={{
+                  required:
+                    'Please fill up To Note! If none, please type "Nil".',
+                }}
+              />
+              {errors.toNote && (
+                <ErrorMessage>{errors.toNote.message}</ErrorMessage>
               )}
 
               <InputBox
