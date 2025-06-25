@@ -17,31 +17,32 @@ export default function ResidentsTable({ attendanceData, userData }: Props) {
   );
   return (
     <Container>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phase</th>
-              <th>To Note</th>
-              <th>In</th>
-              <th>Out</th>
-              <th>Verified by</th>
-              <th>Reason</th>
-              <th>Remarks</th>
-            </tr>
-          </thead>
-          <tbody>
-            {residents
-              ?.sort((a, b) => a.name.localeCompare(b.name))
-              .map((u, index) => (
-                <Row
-                  attendanceData={attendanceData}
-                  userData={u}
-                  key={index}
-                  adminData={others}
-                />
-              ))}
-          </tbody>
-        </Table>
+      <Table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phase</th>
+            <th>To Note</th>
+            <th>In</th>
+            <th>Out</th>
+            <th>Verified by</th>
+            <th>Reason</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {residents
+            ?.sort((a, b) => a.name.localeCompare(b.name))
+            .map((u, index) => (
+              <Row
+                attendanceData={attendanceData}
+                userData={u}
+                key={index}
+                adminData={others}
+              />
+            ))}
+        </tbody>
+      </Table>
     </Container>
   );
 }
