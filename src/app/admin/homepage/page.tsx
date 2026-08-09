@@ -21,21 +21,6 @@ export default function HomePage() {
     }
   }, []);
 
-  const [timeNow, setTime] = useState(
-    dayjs().format("dddd DD-MM-YYYY HH:mm").toString()
-  );
-
-  useEffect(() => {
-    const updateTime = () => {
-      setTime(dayjs().format("dddd DD-MM-YYYY HH:mm").toString());
-    };
-
-    // Set interval to update time every second
-    const intervalId = setInterval(updateTime, 60000);
-
-    // Cleanup the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
 
   const day = dayjs().format("YYYY-MM-DD");
   const [attendanceData, setAttendanceData] = useState<DayAttendanceResponse[]>(
@@ -106,7 +91,6 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      {/* <Date>{timeNow}</Date> */}
       <Date>
         <span>{dayjs().format("dddd")}</span>
         <span style={{ margin: "0 22vw" }}>{dayjs().format("DD-MM-YYYY")}</span>
