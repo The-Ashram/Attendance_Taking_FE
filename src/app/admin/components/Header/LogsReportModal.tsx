@@ -53,7 +53,7 @@ export default function LogsReportModal({ visible, onClose }: Props) {
         `${process.env.NEXT_PUBLIC_API_URL}/log/export?from=${formValues.from}&to=${formValues.to}`,
         { responseType: "blob" },
       );
-      const contentDisposition = response.headers["content-disposition"];
+
       const filename =
         "audit_report_" +
         formValues.from +
