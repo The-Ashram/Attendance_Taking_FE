@@ -1,9 +1,11 @@
 import {
   CTAButton,
   ErrorMessage,
+  FieldContainer,
   InputBox,
   InputWrapper,
   LoginLabel,
+  ToggleButton,
   Wrapper,
 } from "@/app/components/LoginModal/styled";
 import { useRouter } from "next/navigation";
@@ -21,6 +23,7 @@ export default function LoginModal() {
   } = useForm<LoginPayload>();
   const [isLoginError, setLoginError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [apiresponse, setApiResponse] = useState<LoginResponse | undefined>(undefined);
 
   const onLogin = async (data: LoginPayload) => {
@@ -75,11 +78,24 @@ export default function LoginModal() {
           {/* Show error message only if there's an error */}
           {errors.email && <ErrorMessage>{errors.email?.message}</ErrorMessage>}
           
-          <InputBox
-            {...register("password", { required: "Fill in your password" })}
-            type={"password"}
-            placeholder={"Password"}
-          />
+          <FieldContainer>
+            <InputBox
+              {...register("password", { required: "Fill in your password" })}
+              type={showPassword ? "text" : "password"}
+              placeholder={"Password"}
+            />
+            <ToggleButton
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? (
+                <img src="/hidePW.png" alt="Hide Password" />
+              ) : (
+                <img src="/showPW.png" alt="Show Password" />
+              )}
+            </ToggleButton>
+          </FieldContainer>
           {/* Show error message only if there's an error */}
           {errors.password && <ErrorMessage>{errors.password?.message}</ErrorMessage>}
         </InputWrapper>
