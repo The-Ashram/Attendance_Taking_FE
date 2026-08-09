@@ -34,8 +34,8 @@ export const InputWrapper = styled.div`
 // Styling for input boxes
 export const InputBox = styled.input`
   width: 100%;
-  max-width: 300px; /* Limits width to avoid overly stretched inputs */
-  padding: 12px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width calculations */
+  padding: 12px 45px 12px 12px; /* Added right padding for the icon */
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ddd;
@@ -55,8 +55,37 @@ export const InputBox = styled.input`
 
   /* Responsive styles */
   @media (max-width: 480px) {
-    padding: 10px;
+    padding: 10px 40px 10px 10px;
     font-size: 14px;
+  }
+`;
+export const FieldContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const ToggleButton = styled.button`
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 20px; /* Adjust size to fit your icons */
+    height: auto;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 `;
 

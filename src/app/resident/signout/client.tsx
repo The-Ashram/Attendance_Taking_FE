@@ -22,7 +22,26 @@ import api from "../../../../api/axios";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
-const options = ["Report Sick", "Medical Appointment", "Work", "Job Interview", "Others (Please input in remarks)"];
+const options = [
+  "Report Sick", 
+  "Medical Appointment", 
+  "Work", 
+  "Job Interview", 
+  "Classes / Courses",
+  "SSO Office",
+  "Temple",
+  "Grocery Shopping",
+  "Home Leave",
+  "Time Off",
+  "Dental",
+  "Reflective Regime",
+  "V.S.S.P",
+  "Compassionate Matters",
+  "Bank Errands",
+  "Gov Appointments",
+  "Spot U.T.",
+  "Others (Please input in remarks)"
+];
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
